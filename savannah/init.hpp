@@ -6,12 +6,14 @@ namespace System {
 }
 
 void Main();
+constexpr int windowWidth = 512;
+constexpr int windowHeight = 512;
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
     DxLib::SetOutApplicationLogValidFlag(FALSE);
     DxLib::ChangeWindowMode(TRUE);
-    DxLib::SetGraphMode(512, 512, 32);
+    DxLib::SetGraphMode(windowWidth,windowHeight, 32);
     DxLib::SetMainWindowText("Sample");
     if (DxLib::DxLib_Init() == -1) return -1;
     DxLib::SetDrawScreen(DX_SCREEN_BACK);
