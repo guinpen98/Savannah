@@ -12,7 +12,9 @@ protected:
     double y = 256;
     double distinationX = 256;
     double distinationY = 256;
-    double fps = 0;
+    double spf = 0.0;
+    double age = 0.0;
+    int oneYear = 24;
 public:
     int moveX();
     int moveY();
@@ -21,14 +23,16 @@ public:
 
     void setDistination();
 
-    void getFps(const double miFps);
+    void getSpf(const double mispf);
 };
 class Herbivore : public Animal {
+private:
+    double lifespan=20.0;
 public:
-    void behavior(int& animalNewX,int& animalNewY,int& animalID);
+    void behavior(int& animalNewX,int& animalNewY,int& animalID,bool& isDie);
 };
 int Animal::moveX() {
-    if (distance == 0) {
+    if (distance == 0.0) {
         setDistination();
         calculateDistance(x, y, distinationX, distinationY);
     }
@@ -37,7 +41,7 @@ int Animal::moveX() {
     return int(x);
 }
 int Animal::moveY() {
-    if (distance == 0) {
+    if (distance == 0.0) {
         setDistination();
         calculateDistance(x, y, distinationX, distinationY);
     }
@@ -65,10 +69,12 @@ void Animal::setDistination() {
     distinationY = hDistr(eng);
 }
 
-void Animal::getFps(const double miFps) {
-    fps = miFps / 1000.0;
+void Animal::getSpf(const double mispf) {
+    spf = mispf / 1000.0;
 }
-void Herbivore::behavior(int& animalNewX,int& animalNewY,int& animalID) {
+void Herbivore::behavior(int& animalNewX,int& animalNewY,int& animalID,bool& isDie) {
+    age += spf;
+    isDie = (age > oneYear * lifespan);
     if (isDistination()) setDistination();
     calculateDistance(x,y,distinationX,distinationY);
     animalNewX=moveX();
