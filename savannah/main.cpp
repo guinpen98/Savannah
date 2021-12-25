@@ -40,12 +40,12 @@ void Main() {
             if (uid(eng)) herbivore.emplace_back();
             for (size_t i = 0; i < herbivore.size();) { //
                 auto& h = herbivore[i];
-                h.getSpf(double(std::chrono::duration_cast<std::chrono::milliseconds>(newTime - oldTime).count()));
-                h.behavior(animalNewX, animalNewY, animalID, isDie);
+                h.lifeActivity(double(std::chrono::duration_cast<std::chrono::milliseconds>(newTime - oldTime).count()), isDie);
                 if (isDie) {
                     herbivore.erase(herbivore.begin() + i);
                 }
                 else {
+                    h.behavior(animalNewX, animalNewY, animalID);
                     Draw::circleDraw(animalNewX, animalNewY, animalID);
                     i++;
                 }

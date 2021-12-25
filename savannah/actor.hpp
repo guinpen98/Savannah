@@ -8,28 +8,32 @@ class Animal {
 private:
     double distance=100.0;
 protected:
-    double x = 256;
-    double y = 256;
-    double distinationX = 256;
-    double distinationY = 256;
+    double x = windowWidth/2.0;
+    double y = windowHeight/2.0;
+    double distinationX = windowWidth / 2.0;
+    double distinationY = windowHeight / 2.0;
     double spf = 0.0;
     double age = 0.0;
     int oneYear = 24;
 public:
     int moveX();
     int moveY();
+    //目的地にいるかどうかの判定
     bool isDistination();
+    //目的地との距離
     void calculateDistance(const double x, const double y, const double dsX, const double dsY);
-
+    //目的地の設定
     void setDistination();
-
-    void getSpf(const double mispf);
+    //計測した1フレームあたりの秒数を設定する
+    void setSpf(const double miSpf);
 };
 class Herbivore : public Animal {
 private:
     double lifespan=20.0;
 public:
-    void behavior(int& animalNewX,int& animalNewY,int& animalID,bool& isDie);
+    void lifeActivity(const double miSpf, bool& isDie);
+
+    void behavior(int& animalNewX, int& animalNewY, int& animalID);
 };
 int Animal::moveX() {
     if (distance == 0.0) {
@@ -69,15 +73,20 @@ void Animal::setDistination() {
     distinationY = hDistr(eng);
 }
 
-void Animal::getSpf(const double mispf) {
-    spf = mispf / 1000.0;
+void Animal::setSpf(const double miSpf) {
+    spf = miSpf / 1000.0;
 }
-void Herbivore::behavior(int& animalNewX,int& animalNewY,int& animalID,bool& isDie) {
+void Herbivore::lifeActivity(const double miSpf,bool& isDie) {
+    setSpf(miSpf);
     age += spf;
     isDie = (age > oneYear * lifespan);
     if (isDistination()) setDistination();
     calculateDistance(x,y,distinationX,distinationY);
-    animalNewX=moveX();
-    animalNewY=moveY();
+}
+void Herbivore::behavior(int& animalNewX, int& animalNewY, int& animalID) {
+    if (isDistination()) setDistination();
+    calculateDistance(x, y, distinationX, distinationY);
+    animalNewX = moveX();
+    animalNewY = moveY();
     animalID = herbivoreE;
 }
