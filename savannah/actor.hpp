@@ -4,12 +4,27 @@
 #include <cmath>
 #include<vector>
 
+struct Vec2 {
+    double x=0.0, y=0.0;
+
+    //デフォルトコンストラクタ
+    Vec2() = default;
+
+    //コンストラクタ
+    Vec2(const double ix, const double iy)
+        :x(ix), y(iy) {}
+
+};
+
 //生物クラス
 class Creatures {
 protected:
+    //座標
+    Vec2 coord = Vec2(window_width / 2.0, window_height / 2.0);
+
     double spf = 0.0;
     double age = 0.0;
-    int one_year = 1;// 24;
+    int one_year = 24;// 24;
 public:
     //計測した1フレームあたりの秒数を設定する
     void setSpf(const double mi_spf);
@@ -23,16 +38,18 @@ void Creatures::setSpf(const double mi_spf) {
 //植物クラス
 class Plant : public Creatures {
 private:
-    double x = window_width / 2.0;
-    double y = window_height / 2.0;
-    double age = 0;
     double breed = 0.0;
     double lifespan = 5.0;
 public:
+    //コンストラクタ
+    Plant() {
+        one_year = 1;
+    }
+
     void lifeActivity(const double mi_spf, bool& is_die,bool& is_breed);
-    void born(const double x, const double y);
-    void getCoordinate(double& plant_x, double& plant_y);
-    bool isCover(const double plant_sub_x, const double plant_sub_y) const;
+    void born(const Vec2& c);
+    Vec2 getCoordinate();
+    bool isCover(const Vec2& c) const;
     bool isBreed();
 };
 
@@ -43,19 +60,17 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
     breed += spf;
     is_breed = isBreed();
     is_die = (age > one_year * lifespan);
-    is_die = (x<0 || x>window_width || y<0 || y>window_height);
-    if (!is_die) Draw::circleDraw(int(x), int(y), plantE);
+    is_die = (coord.x<0 || coord.x>window_width || coord.y<0 || coord.y>window_height);
+    if (!is_die) Draw::circleDraw(int(coord.x), int(coord.y), plantE);
 }
-void Plant::born(const double born_x, const double born_y) {
-    x = born_x;
-    y = born_y;
+void Plant::born(const Vec2& c) {
+    coord = c;
 }
-void Plant::getCoordinate(double& plant_x, double& plant_y) {
-    plant_x = x;
-    plant_y = y;
+Vec2 Plant::getCoordinate() {
+    return coord;
 }
-bool Plant::isCover(const double plant_sub_x, const double plant_sub_y) const {
-    return (std::sqrt(std::pow(x - plant_sub_x, 2) + std::pow(y - plant_sub_y, 2)) < 10);
+bool Plant::isCover(const Vec2& c) const {
+    return (std::sqrt(std::pow(coord.x - c.x, 2) + std::pow(coord.y - c.y, 2)) < 10);
 }
 bool Plant::isBreed() {
     if (breed > one_year && age > one_year / 2) {
@@ -70,8 +85,6 @@ class Animal : public Creatures{
 private:
     double distance=100.0;
 protected:
-    double x = window_width/2.0;
-    double y = window_height/2.0;
     double distination_x = window_width / 2.0;
     double distination_y = window_height / 2.0;
 public:
@@ -84,7 +97,7 @@ public:
     //目的地の設定
     void setDistination();
     //目的地との距離
-    void calculateDistance(const double x, const double y, const double ds_x, const double ds_y);
+    void calculateDistance(const double ds_x, const double ds_y);
 };
 
 
@@ -104,26 +117,26 @@ public:
 int Animal::moveX() {
     if (distance == 0.0) {
         setDistination();
-        calculateDistance(x, y, distination_x, distination_y);
+        calculateDistance(distination_x, distination_y);
     }
-    const double dx = (distination_x - x) / distance;
-    x += dx;
-    return int(x);
+    const double dx = (distination_x - coord.x) / distance;
+    coord.x += dx;
+    return int(coord.x);
 }
 int Animal::moveY() {
     if (distance == 0.0) {
         setDistination();
-        calculateDistance(x, y, distination_x, distination_y);
+        calculateDistance( distination_x, distination_y);
     }
-    const double dy = (distination_y - y) / distance;
-    y += dy;
-    return int(y);
+    const double dy = (distination_y - coord.y) / distance;
+    coord.y += dy;
+    return int(coord.y);
 }
 bool Animal::isDistination() const {
-    return ((x - distination_x) < 1 && (y - distination_y) < 1);
+    return ((coord.x - distination_x) < 1 && (coord.y - distination_y) < 1);
 }
-void Animal::calculateDistance(const double x, const double y, const double ds_x, const double ds_y) {
-    distance=std::sqrt(std::pow(x - ds_x, 2) + std::pow(y - ds_y, 2));
+void Animal::calculateDistance( const double ds_x, const double ds_y) {
+    distance=std::sqrt(std::pow(coord.x - ds_x, 2) + std::pow(coord.y - ds_y, 2));
 }
 void Animal::setDistination() {
     constexpr int MIN = 0;
@@ -145,11 +158,11 @@ void Herbivore::lifeActivity(const double mi_spf,bool& is_die) {
     age += spf;
     is_die = (age > one_year * lifespan);
     if (isDistination()) setDistination();
-    calculateDistance(x,y,distination_x,distination_y);
+    calculateDistance(distination_x,distination_y);
 }
 void Herbivore::behavior() {
     if (isDistination()) setDistination();
-    calculateDistance(x, y, distination_x, distination_y);
+    calculateDistance(distination_x, distination_y);
     Draw::circleDraw(moveX(), moveY(), herbivoreE);
 }
 
@@ -160,26 +173,26 @@ void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
     //植物それぞれの生命活動
     for (size_t i = 0; i < plant.size();) {
         bool plant_is_die, plant_is_breed;
-        //植物の座標
-        double plant_x, plant_y;
         plant[i].lifeActivity(mi_spf, plant_is_die, plant_is_breed);
         //植物の繁殖
         if (plant_is_breed) {
-            plant[i].getCoordinate(plant_x, plant_y);
+            //植物の座標
+            const Vec2 plant_c = plant[i].getCoordinate();
             const int plant_size = plant.size();
             plant.emplace_back();
-            plant[plant_size].born(plant_x - 10, plant_y);
+            plant[plant_size].born(Vec2(plant_c.x - 10, plant_c.y));
             plant.emplace_back();
-            plant[plant_size + 1].born(plant_x + 10, plant_y);
+            plant[plant_size + 1].born(Vec2(plant_c.x + 10, plant_c.y));
             plant.emplace_back();
-            plant[plant_size + 2].born(plant_x, plant_y - 10);
+            plant[plant_size + 2].born(Vec2(plant_c.x, plant_c.y - 10));
             plant.emplace_back();
-            plant[plant_size + 3].born(plant_x, plant_y + 10);
+            plant[plant_size + 3].born(Vec2(plant_c.x, plant_c.y + 10));
         }
         //植物が他の植物に被っている場合死ぬ
         for (size_t j = i + 1; j < plant.size(); j++) {
-            plant[j].getCoordinate(plant_x, plant_y);
-            if (plant[i].isCover(plant_x, plant_y)) plant.erase(plant.begin() + j);
+            //植物の座標
+            const Vec2 plant_c = plant[j].getCoordinate();
+            if (plant[i].isCover(plant_c)) plant.erase(plant.begin() + j);
         }
         //植物の死
         if (plant_is_die) {

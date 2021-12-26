@@ -22,7 +22,7 @@ void Main() {
     //植物生成
     for (int i = 0; i < 4; i++) {
         plant.emplace_back();
-        plant[i].born(i * 15.0+50.0, i * 25.0+20.0);
+        plant[i].born(Vec2(i * 15.0+50.0, i * 25.0+20.0));
     }
     plant.emplace_back();
 
