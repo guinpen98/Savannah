@@ -1,5 +1,5 @@
 #pragma once
-enum Creatures :int {
+enum CreaturesE :int {
 	plantE, herbivoreE, carnivoreE
 };
 enum HerbivoreState :int {

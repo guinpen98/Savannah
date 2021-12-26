@@ -33,11 +33,12 @@ void Main() {
     newTime = std::chrono::system_clock::now();
     while (System::Update()) {
         for (int j = 0; j < 1; ++j) {
+            //1フレームあたりの時間計測
             oldTime = newTime;
             newTime = std::chrono::system_clock::now();
 
             if (uid(eng)) herbivore.emplace_back();
-            for (size_t i = 0; i < herbivore.size();) { //
+            for (size_t i = 0; i < herbivore.size();) {
                 auto& h = herbivore[i];
                 h.lifeActivity(double(std::chrono::duration_cast<std::chrono::milliseconds>(newTime - oldTime).count()), isDie);
                 if (isDie) {
