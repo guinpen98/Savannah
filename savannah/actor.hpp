@@ -3,7 +3,16 @@
 #include<random>
 #include <cmath>
 
+//植物クラス
+class Plant {
+private:
+    double x = windowWidth / 2.0;
+    double y = windowHeight / 2.0;
+public:
 
+};
+
+//動物クラス
 class Animal {
 private:
     double distance=100.0;
@@ -16,7 +25,9 @@ protected:
     double age = 0.0;
     int oneYear = 24;
 public:
+    //新しいX座標を設定
     int moveX();
+    //新しいY座標を設定
     int moveY();
     //目的地にいるかどうかの判定
     bool isDistination();
@@ -27,14 +38,21 @@ public:
     //計測した1フレームあたりの秒数を設定する
     void setSpf(const double miSpf);
 };
+
+
+//草食動物クラス
 class Herbivore : public Animal {
 private:
     double lifespan=20.0;
 public:
+    //生命活動を管理
     void lifeActivity(const double miSpf, bool& isDie);
-
+    //行動
     void behavior(int& animalNewX, int& animalNewY, int& animalID);
 };
+
+
+//動物クラス実装
 int Animal::moveX() {
     if (distance == 0.0) {
         setDistination();
@@ -60,7 +78,6 @@ bool Animal::isDistination() {
 void Animal::calculateDistance(const double x, const double y, const double dsX, const double dsY) {
     distance=sqrt(pow(x - dsX, 2) + pow(y - dsY, 2));
 }
-
 void Animal::setDistination() {
     constexpr int MIN = 0;
     constexpr int wMAX = windowWidth;
@@ -72,10 +89,12 @@ void Animal::setDistination() {
     distinationX = wDistr(eng);
     distinationY = hDistr(eng);
 }
-
 void Animal::setSpf(const double miSpf) {
     spf = miSpf / 1000.0;
 }
+
+
+//草食動物実装
 void Herbivore::lifeActivity(const double miSpf,bool& isDie) {
     setSpf(miSpf);
     age += spf;

@@ -1,6 +1,5 @@
 #include"init.hpp"
 #include"actor.hpp"
-#include"creatures.h"
 #include<random>
 #include<vector>
 #include <chrono>
