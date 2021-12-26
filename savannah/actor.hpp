@@ -47,9 +47,9 @@ public:
     }
 
     void lifeActivity(const double mi_spf, bool& is_die,bool& is_breed);
-    void born(const Vec2& c);
+    void born(const Vec2& sub_coord);
     Vec2 getCoordinate();
-    bool isCover(const Vec2& c) const;
+    bool isCover(const Vec2& sub_coord) const;
     bool isBreed();
 };
 
@@ -63,14 +63,14 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
     is_die = (coord.x<0 || coord.x>window_width || coord.y<0 || coord.y>window_height);
     if (!is_die) Draw::circleDraw(int(coord.x), int(coord.y), plantE);
 }
-void Plant::born(const Vec2& c) {
-    coord = c;
+void Plant::born(const Vec2& sub_coord) {
+    coord = sub_coord;
 }
 Vec2 Plant::getCoordinate() {
     return coord;
 }
-bool Plant::isCover(const Vec2& c) const {
-    return (std::sqrt(std::pow(coord.x - c.x, 2) + std::pow(coord.y - c.y, 2)) < 10);
+bool Plant::isCover(const Vec2& sub_coord) const {
+    return (std::sqrt(std::pow(coord.x - sub_coord.x, 2) + std::pow(coord.y - sub_coord.y, 2)) < 10);
 }
 bool Plant::isBreed() {
     if (breed > one_year && age > one_year / 2) {
@@ -87,11 +87,15 @@ private:
 protected:
     double distination_x = window_width / 2.0;
     double distination_y = window_height / 2.0;
+    Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
+
 public:
     //新しいX座標を設定
     int moveX();
     //新しいY座標を設定
     int moveY();
+    //新しい座標の設定
+    int move();
     //目的地にいるかどうかの判定
     bool isDistination() const;
     //目的地の設定
@@ -130,6 +134,15 @@ int Animal::moveY() {
     }
     const double dy = (distination_y - coord.y) / distance;
     coord.y += dy;
+    return int(coord.y);
+}
+int Animal::move() {
+    if (distance == 0.0) {
+        setDistination();
+        calculateDistance(distination_x, distination_y);
+    }
+    const  Vec2 dCoord = Vec2((distination_coord.x - coord.x) / distance,(distination_coord.y - coord.y) / distance);
+    coord = Vec2(coord.x+dCoord.x,coord.y+dCoord.y);
     return int(coord.y);
 }
 bool Animal::isDistination() const {
@@ -178,7 +191,7 @@ void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
         if (plant_is_breed) {
             //植物の座標
             const Vec2 plant_c = plant[i].getCoordinate();
-            const int plant_size = plant.size();
+            const unsigned int plant_size = plant.size();
             plant.emplace_back();
             plant[plant_size].born(Vec2(plant_c.x - 10, plant_c.y));
             plant.emplace_back();
@@ -187,13 +200,20 @@ void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
             plant[plant_size + 2].born(Vec2(plant_c.x, plant_c.y - 10));
             plant.emplace_back();
             plant[plant_size + 3].born(Vec2(plant_c.x, plant_c.y + 10));
+            //植物が他の植物に被っている場合死ぬ
+            int seeds_count = 4;
+            for (size_t j = 0; j < plant_size; j++) {
+                //植物の座標
+                const Vec2 plant_c = plant[j].getCoordinate();     
+                for(int k=0;k<seeds_count;k++)
+                    if (plant[plant_size + k].isCover(plant_c)) {
+                        plant.erase(plant.begin() + plant_size + k);
+                        seeds_count--;
+                        k--;
+                    }
+            }
         }
-        //植物が他の植物に被っている場合死ぬ
-        for (size_t j = i + 1; j < plant.size(); j++) {
-            //植物の座標
-            const Vec2 plant_c = plant[j].getCoordinate();
-            if (plant[i].isCover(plant_c)) plant.erase(plant.begin() + j);
-        }
+        
         //植物の死
         if (plant_is_die) {
             plant.erase(plant.begin() + i);
