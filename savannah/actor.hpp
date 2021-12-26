@@ -40,6 +40,7 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
     breed += spf;
     is_breed = isBreed();
     is_die = (age > one_year * lifespan);
+    if (!is_die) Draw::circleDraw(int(x), int(y), plantE);
 }
 void Plant::born(const double born_x, const double born_y) {
     x = born_x;
