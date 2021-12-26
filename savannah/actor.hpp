@@ -30,6 +30,8 @@ private:
 public:
     void lifeActivity(const double mi_spf, bool& is_die,bool& is_breed);
     void born(const double x, const double y);
+    void getCoordinate(double& plant_x, double& plant_y);
+    bool isCover(const double plant_sub_x, const double plant_sub_y);
     bool isBreed();
 };
 
@@ -40,11 +42,20 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
     breed += spf;
     is_breed = isBreed();
     is_die = (age > one_year * lifespan);
+    is_die = (x<0 || x>window_width || y<0 || y>window_height);
     if (!is_die) Draw::circleDraw(int(x), int(y), plantE);
 }
 void Plant::born(const double born_x, const double born_y) {
     x = born_x;
     y = born_y;
+}
+void Plant::getCoordinate(double& plant_x, double& plant_y) {
+    plant_x = x;
+    plant_y = y;
+}
+bool Plant::isCover(const double plant_sub_x, const double plant_sub_y) {
+    if (sqrt(pow(x - plant_sub_x, 2) + pow(y - plant_sub_y, 2)) < 10) return true;
+    else return false;
 }
 bool Plant::isBreed() {
     if (breed > one_year && age > one_year / 2) {
