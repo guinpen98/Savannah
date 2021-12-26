@@ -2,13 +2,14 @@
 #include"init.hpp"
 #include<random>
 #include <cmath>
+#include<vector>
 
 //生物クラス
 class Creatures {
 protected:
     double spf = 0.0;
     double age = 0.0;
-    int one_year = 24;
+    int one_year = 1;// 24;
 public:
     //計測した1フレームあたりの秒数を設定する
     void setSpf(const double mi_spf);
@@ -31,7 +32,7 @@ public:
     void lifeActivity(const double mi_spf, bool& is_die,bool& is_breed);
     void born(const double x, const double y);
     void getCoordinate(double& plant_x, double& plant_y);
-    bool isCover(const double plant_sub_x, const double plant_sub_y);
+    bool isCover(const double plant_sub_x, const double plant_sub_y) const;
     bool isBreed();
 };
 
@@ -53,16 +54,15 @@ void Plant::getCoordinate(double& plant_x, double& plant_y) {
     plant_x = x;
     plant_y = y;
 }
-bool Plant::isCover(const double plant_sub_x, const double plant_sub_y) {
-    if (sqrt(pow(x - plant_sub_x, 2) + pow(y - plant_sub_y, 2)) < 10) return true;
-    else return false;
+bool Plant::isCover(const double plant_sub_x, const double plant_sub_y) const {
+    return (std::sqrt(std::pow(x - plant_sub_x, 2) + std::pow(y - plant_sub_y, 2)) < 10);
 }
 bool Plant::isBreed() {
     if (breed > one_year && age > one_year / 2) {
         breed = 0.0;
         return true;
     }
-    else return false;
+    return false;
 }
 
 //動物クラス
@@ -80,7 +80,7 @@ public:
     //新しいY座標を設定
     int moveY();
     //目的地にいるかどうかの判定
-    bool isDistination();
+    bool isDistination() const;
     //目的地の設定
     void setDistination();
     //目的地との距離
@@ -106,7 +106,7 @@ int Animal::moveX() {
         setDistination();
         calculateDistance(x, y, distination_x, distination_y);
     }
-    double dx = (distination_x - x) / distance;
+    const double dx = (distination_x - x) / distance;
     x += dx;
     return int(x);
 }
@@ -115,16 +115,15 @@ int Animal::moveY() {
         setDistination();
         calculateDistance(x, y, distination_x, distination_y);
     }
-    double dy = (distination_y - y) / distance;
+    const double dy = (distination_y - y) / distance;
     y += dy;
     return int(y);
 }
-bool Animal::isDistination() {
-    if ((x - distination_x) < 1 && (y - distination_y) < 1) return true;
-    else return false;
+bool Animal::isDistination() const {
+    return ((x - distination_x) < 1 && (y - distination_y) < 1);
 }
 void Animal::calculateDistance(const double x, const double y, const double ds_x, const double ds_y) {
-    distance=sqrt(pow(x - ds_x, 2) + pow(y - ds_y, 2));
+    distance=std::sqrt(std::pow(x - ds_x, 2) + std::pow(y - ds_y, 2));
 }
 void Animal::setDistination() {
     constexpr int MIN = 0;
@@ -152,4 +151,59 @@ void Herbivore::behavior() {
     if (isDistination()) setDistination();
     calculateDistance(x, y, distination_x, distination_y);
     Draw::circleDraw(moveX(), moveY(), herbivoreE);
+}
+
+
+
+
+void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
+    //植物それぞれの生命活動
+    for (size_t i = 0; i < plant.size();) {
+        bool plant_is_die, plant_is_breed;
+        //植物の座標
+        double plant_x, plant_y;
+        plant[i].lifeActivity(mi_spf, plant_is_die, plant_is_breed);
+        //植物の繁殖
+        if (plant_is_breed) {
+            plant[i].getCoordinate(plant_x, plant_y);
+            const int plant_size = plant.size();
+            plant.emplace_back();
+            plant[plant_size].born(plant_x - 10, plant_y);
+            plant.emplace_back();
+            plant[plant_size + 1].born(plant_x + 10, plant_y);
+            plant.emplace_back();
+            plant[plant_size + 2].born(plant_x, plant_y - 10);
+            plant.emplace_back();
+            plant[plant_size + 3].born(plant_x, plant_y + 10);
+        }
+        //植物が他の植物に被っている場合死ぬ
+        for (size_t j = i + 1; j < plant.size(); j++) {
+            plant[j].getCoordinate(plant_x, plant_y);
+            if (plant[i].isCover(plant_x, plant_y)) plant.erase(plant.begin() + j);
+        }
+        //植物の死
+        if (plant_is_die) {
+            plant.erase(plant.begin() + i);
+        }
+        else {
+            i++;
+        }
+    }
+
+}
+
+void herbivoreBehavior(std::vector<Herbivore>& herbivore, const double mi_spf) {
+    //草食動物それぞれの行動
+    for (size_t i = 0; i < herbivore.size();) {
+        auto& h = herbivore[i];
+        bool herbivore_is_die;
+        h.lifeActivity(mi_spf, herbivore_is_die);
+        if (herbivore_is_die) {
+            herbivore.erase(herbivore.begin() + i);
+        }
+        else {
+            h.behavior();
+            i++;
+        }
+    }
 }

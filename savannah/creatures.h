@@ -1,7 +1,11 @@
 #pragma once
 enum CreaturesE :int {
-	plantE, herbivoreE, carnivoreE
+	plantE
+	, herbivoreE
+	, carnivoreE
 };
 enum HerbivoreState :int {
-	herbivoreWanderE,herbivoreForageE,herbivoreBreedE
+	herbivoreWanderE
+	,herbivoreForageE
+	,herbivoreBreedE
 };
