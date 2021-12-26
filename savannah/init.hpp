@@ -26,6 +26,6 @@ namespace Draw {
 };
 
 void Main();
-constexpr int windowWidth = 960;
-constexpr int windowHeight = 540;
+constexpr int window_width = 960;
+constexpr int window_height = 540;
 
