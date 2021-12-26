@@ -44,8 +44,7 @@ void Main() {
                     herbivore.erase(herbivore.begin() + i);
                 }
                 else {
-                    h.behavior(animalNewX, animalNewY, animalID);
-                    Draw::circleDraw(animalNewX, animalNewY, animalID);
+                    h.behavior();
                     i++;
                 }
             }

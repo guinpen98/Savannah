@@ -48,7 +48,7 @@ public:
     //生命活動を管理
     void lifeActivity(const double miSpf, bool& isDie);
     //行動
-    void behavior(int& animalNewX, int& animalNewY, int& animalID);
+    void behavior();
 };
 
 
@@ -102,10 +102,8 @@ void Herbivore::lifeActivity(const double miSpf,bool& isDie) {
     if (isDistination()) setDistination();
     calculateDistance(x,y,distinationX,distinationY);
 }
-void Herbivore::behavior(int& animalNewX, int& animalNewY, int& animalID) {
+void Herbivore::behavior() {
     if (isDistination()) setDistination();
     calculateDistance(x, y, distinationX, distinationY);
-    animalNewX = moveX();
-    animalNewY = moveY();
-    animalID = herbivoreE;
+    Draw::circleDraw(moveX(), moveY(), herbivoreE);
 }
