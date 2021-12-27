@@ -8,6 +8,7 @@ private:
     double distance = 100.0;
 protected:
     Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
+    double satiety = 100;
 public:
     //新しい座標の設定
     void move();
@@ -17,6 +18,8 @@ public:
     void setDistination();
     //目的地との距離
     void calculateDistance(const Vec2& distination_coord);
+    //生命活動を管理
+    void lifeActivity(const double mi_spf, bool& is_die);
 };
 
 //動物クラス実装
@@ -48,4 +51,10 @@ void Animal::setDistination() {
     std::uniform_int_distribution<int> hDistr(MIN, hMAX);
     distination_coord.x = wDistr(eng);
     distination_coord.y = hDistr(eng);
+}
+void Animal::lifeActivity(const double mi_spf, bool& is_die) {
+    setSpf(mi_spf);
+    getOld();
+    satiety -= getSpf();
+    is_die = (getAge() > one_year * lifespan||satiety<0);
 }
