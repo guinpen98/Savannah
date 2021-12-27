@@ -13,7 +13,7 @@ void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
         //植物の繁殖
         if (plant_is_breed) {
             //植物の座標
-            const Vec2 plant_c = plant[i].getCoordinate();
+            const Vec2 plant_c = plant[i].getCoord();
             const unsigned int plant_size = plant.size();
             int seeds_count = 0;
             plant[i].born(plant,Vec2(plant_c.x - 10, plant_c.y),seeds_count);
@@ -26,7 +26,7 @@ void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
             for (int k = 0; k < seeds_count; k++) {
                 for (size_t j = 0; j < plant_size; j++) {
                     //植物の座標
-                    const Vec2 plant_c = plant[j].getCoordinate();
+                    const Vec2 plant_c = plant[j].getCoord();
                     if (plant[plant_size + k].isCover(plant_c)) {
                         plant.erase(plant.begin() + plant_size + k);
                         seeds_count--;

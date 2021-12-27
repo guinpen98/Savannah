@@ -17,7 +17,7 @@ public:
     //新しい座標の設定
     void move();
     //目的地にいるかどうかの判定
-    bool isDistination() const;
+    bool isDistination();
     //目的地の設定
     void setDistination();
     //目的地との距離
@@ -30,14 +30,17 @@ void Animal::move() {
         setDistination();
         calculateDistance(distination_coord);
     }
+    Vec2 const coord = getCoord();
     const  Vec2 dCoord = Vec2((distination_coord.x - coord.x) / distance, (distination_coord.y - coord.y) / distance);
-    coord = Vec2(coord.x + dCoord.x, coord.y + dCoord.y);
+    setCoord (Vec2(coord.x + dCoord.x, coord.y + dCoord.y));
     Draw::circleDraw(coord, herbivoreE);
 }
-bool Animal::isDistination() const {
+bool Animal::isDistination() {
+    const Vec2 coord = getCoord();
     return ((coord.x - distination_coord.x) < 1.0 && (coord.y - distination_coord.y) < 1.0);
 }
 void Animal::calculateDistance(const Vec2& distination_coord) {
+    const Vec2 coord = getCoord();
     distance = std::sqrt(std::pow(coord.x - distination_coord.x, 2) + std::pow(coord.y - distination_coord.y, 2));
 }
 void Animal::setDistination() {
