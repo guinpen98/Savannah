@@ -156,8 +156,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.hpp" />
-    <ClInclude Include="creatures.h" />
+    <ClInclude Include="animal.hpp" />
+    <ClInclude Include="configuration.h" />
+    <ClInclude Include="creatures.hpp" />
+    <ClInclude Include="herbivore.hpp" />
     <ClInclude Include="init.hpp" />
+    <ClInclude Include="plant.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

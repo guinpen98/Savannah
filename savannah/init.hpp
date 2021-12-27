@@ -1,6 +1,6 @@
 #pragma once
 #include "DxLib.h"
-#include"creatures.h"
+#include"creatures.hpp"
 
 namespace System {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
@@ -26,13 +26,12 @@ namespace Draw {
             break;
         }
 
-        DrawCircle(coord.x, coord.y, 5, color, TRUE);
+        DrawCircle(int(coord.x), int(coord.y), 5, color, TRUE);
     }
 };
 
 void Main();
-constexpr int window_width = 960;
-constexpr int window_height = 540;
+
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
