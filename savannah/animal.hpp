@@ -8,12 +8,7 @@ private:
     double distance = 100.0;
 protected:
     Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
-
 public:
-    //新しいX座標を設定
-    int moveX();
-    //新しいY座標を設定
-    int moveY();
     //新しい座標の設定
     void move();
     //目的地にいるかどうかの判定

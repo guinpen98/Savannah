@@ -9,9 +9,11 @@ enum HerbivoreState :int {
 
 //草食動物クラス
 class Herbivore : public Animal {
-private:
-    double lifespan = 20.0;
 public:
+    Herbivore() {
+        lifespan = 5.0;
+        one_year = 1;
+    }
     //生命活動を管理
     void lifeActivity(const double mi_spf, bool& is_die);
     //行動
@@ -21,8 +23,8 @@ public:
 //草食動物実装
 void Herbivore::lifeActivity(const double mi_spf, bool& is_die) {
     setSpf(mi_spf);
-    age += spf;
-    is_die = (age > one_year * lifespan);
+    getOld();
+    is_die = (getAge() > one_year * lifespan);
     if (isDistination()) setDistination();
     calculateDistance(distination_coord);
 }
