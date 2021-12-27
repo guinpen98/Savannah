@@ -12,11 +12,11 @@ enum HerbivoreStateE :int {
 //草食動物クラス
 class Herbivore : public Animal {
 public:
+    HerbivoreStateE herbivore_state = herbivoreWanderE;
     Herbivore() {
         lifespan = 20.0;
         one_year = 24;
     }
-    HerbivoreStateE herbivore_state = herbivoreWanderE;
     //行動
     void behavior(std::vector<Herbivore>& herbivore,std::vector<Plant>& plant,const size_t i);
     //距離を計測
@@ -31,6 +31,10 @@ public:
     void herbivoreBreed(std::vector<Herbivore>& herbivore,const size_t hs);
     //子供が生まれる
     void born(const Vec2& born_coord, std::vector<Herbivore>& herbivore,const int s);
+    //ステートの値を渡す
+    int getHerbivoreState();
+    //ステートの変更
+    void setHerbivoreState(enum HerbivoreStateE new_state);
 };
 
 //草食動物実装
@@ -62,7 +66,7 @@ void Herbivore::behavior(std::vector<Herbivore>& herbivore,std::vector<Plant>& p
     move();
 }
 void Herbivore::isCloseToPlants(const std::vector<Plant>& plant,int& s,bool& is_can_eat) {
-    double min_distance = 10000.0;
+    double min_distance = 50000.0;
     for (size_t i = 0; i < plant.size(); i++) {
         //最小距離以上の長さの場合は返す
         if (distance(plant[i].getCoord()) >= min_distance) continue;
@@ -100,9 +104,18 @@ void Herbivore::herbivoreBreed(std::vector<Herbivore>& herbivore, const size_t h
 }
 void Herbivore::born(const Vec2& born_coord, std::vector<Herbivore>& herbivore,const int s) {
     herbivore.emplace_back();
-    herbivore[herbivore.size() - 1].setCoord(born_coord);
-    satiety -= one_year / 2;
+    herbivore.back().setCoord(born_coord);
+    satiety -= one_year / 2.0;
     herbivore_state = herbivoreWanderE;
-    herbivore[s].satiety -= one_year / 2;
+    breed_period = 0.0;
+    herbivore[s].satiety -= one_year / 2.0;
     herbivore[s].herbivore_state = herbivoreWanderE;
+    herbivore[s].breed_period = 0.0;
+
+}
+int Herbivore::getHerbivoreState() {
+    return herbivore_state;
+}
+void Herbivore::setHerbivoreState(enum HerbivoreStateE new_state) {
+    herbivore_state = new_state;
 }

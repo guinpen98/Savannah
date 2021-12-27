@@ -60,7 +60,7 @@ public:
 	//一年が何秒かの値を渡す
 	int getOneYear()const;
 	//寿命の値を渡す
-	int getLifespan()const;
+	double getLifespan()const;
 };
 
 //生物クラス実装
@@ -88,6 +88,6 @@ void Creatures::setCoord(const Vec2& new_coord) {
 int Creatures::getOneYear()const {
 	return one_year;
 }
-int Creatures::getLifespan()const {
+double Creatures::getLifespan()const {
 	return lifespan;
 }
