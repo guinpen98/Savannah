@@ -1,10 +1,12 @@
 #pragma once
 #include"animal.hpp"
+#include <limits>
 
 enum HerbivoreStateE :int {
 	herbivoreWanderE
 	, herbivoreForageE
 	, herbivoreBreedE
+	, herbivoreDieE
 };
 
 //草食動物クラス
@@ -14,26 +16,31 @@ public:
         lifespan = 20.0;
         one_year = 24;
     }
-    int herbivore_state = herbivoreWanderE;
+    HerbivoreStateE herbivore_state = herbivoreWanderE;
     //行動
-    void behavior(std::vector<Plant>& plant);
+    void behavior(std::vector<Herbivore>& herbivore,std::vector<Plant>& plant,const size_t i);
     //距離を計測
-    double plantDistance(const Vec2& plant_coord)const;
+    double distance(const Vec2& plant_coord)const;
 
     //食事
     void eat(std::vector<Plant>& plant, const int s);
 
     //草食動物の近くにある植物を探す
     void isCloseToPlants(const std::vector<Plant>& plant, int& s, bool& is_can_eat);
+    //繁殖
+    void herbivoreBreed(std::vector<Herbivore>& herbivore,const size_t hs);
+    //子供が生まれる
+    void born(const Vec2& born_coord, std::vector<Herbivore>& herbivore,const int s);
 };
 
 //草食動物実装
-void Herbivore::behavior(std::vector<Plant>& plant) {
+void Herbivore::behavior(std::vector<Herbivore>& herbivore,std::vector<Plant>& plant,const size_t hs) {
     if (isBreedingSeason()) {
         herbivore_state = herbivoreBreedE;
+        herbivoreBreed(herbivore, hs);
         if (isDistination()) setRandomDistination();
     }
-    else {
+    else if(satiety< max_satiety * 3.0 / 4.0){
         //草食物にの視界のなかにあって、最も近い植物の添え字
         int s = -1;
         bool is_can_eat;
@@ -48,22 +55,54 @@ void Herbivore::behavior(std::vector<Plant>& plant) {
             if (isDistination()) setRandomDistination();
         }
     }
+    else {
+        herbivore_state = herbivoreWanderE;
+        if (isDistination()) setRandomDistination();
+    }
     move();
 }
 void Herbivore::isCloseToPlants(const std::vector<Plant>& plant,int& s,bool& is_can_eat) {
-    double min_distance = 15;
-    for (size_t i = 0; i < plant.size();i++) {
-        if (plantDistance(plant[i].getCoord()) < min_distance) {
-            min_distance = plantDistance(plant[i].getCoord());
-            s = i;
-        }
+    double min_distance = 10000.0;
+    for (size_t i = 0; i < plant.size(); i++) {
+        //最小距離以上の長さの場合は返す
+        if (distance(plant[i].getCoord()) >= min_distance) continue;
+        
+        min_distance = distance(plant[i].getCoord());
+        s = i;
     }
     is_can_eat = (min_distance < 2);
 }
-double Herbivore::plantDistance(const Vec2& plant_coord) const{
-    return std::sqrt(std::pow(getCoord().x - plant_coord.x, 2) + std::pow(getCoord().y - plant_coord.y, 2));
+double Herbivore::distance(const Vec2& plant_coord) const{
+    return getCoord().distance(plant_coord);
 }
 void Herbivore::eat( std::vector<Plant>& plant, const int s) {
     plant.erase(plant.begin() + s);
-    satiety += one_year / 2;
+    satiety += one_year / 2.0;
+    if (satiety > max_satiety) satiety = max_satiety;
+}
+void Herbivore::herbivoreBreed(std::vector<Herbivore>& herbivore, const size_t hs) {
+    double min_distance = (std::numeric_limits<double>::max)();
+    int s = -1;
+    for (size_t i = 0; i < herbivore.size(); i++) {
+        //同じ個体の場合は返す
+        if (i == hs) continue;
+
+        if (herbivore[i].herbivore_state != herbivoreBreedE) continue;
+        if (distance(herbivore[i].getCoord()) >= min_distance) continue;
+        min_distance = distance(herbivore[i].getCoord());
+        s = i;
+    }
+    if (s == -1) return;
+    if (min_distance < 4) {
+        born(getCoord(), herbivore, s);
+    }
+    else setDistination(herbivore[s].getCoord());
+}
+void Herbivore::born(const Vec2& born_coord, std::vector<Herbivore>& herbivore,const int s) {
+    herbivore.emplace_back();
+    herbivore[herbivore.size() - 1].setCoord(born_coord);
+    satiety -= one_year / 2;
+    herbivore_state = herbivoreWanderE;
+    herbivore[s].satiety -= one_year / 2;
+    herbivore[s].herbivore_state = herbivoreWanderE;
 }
