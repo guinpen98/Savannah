@@ -6,17 +6,6 @@
 
 
 
-struct Vec2 {
-    double x=0.0, y=0.0;
-
-    //デフォルトコンストラクタ
-    Vec2() = default;
-
-    //コンストラクタ
-    Vec2(const double ix, const double iy)
-        :x(ix), y(iy) {}
-
-};
 
 //生物クラス
 class Creatures {
@@ -51,11 +40,10 @@ private:
 public:
     //コンストラクタ
     Plant() {
-        one_year = 1;
+        one_year = 24;
     }
 
     void lifeActivity(const double mi_spf, bool& is_die,bool& is_breed);
-    void bornSetCoord(const Vec2& sub_coord);
     Vec2 getCoordinate();
     bool isCover(const Vec2& sub_coord) const;
     bool isBreed();
@@ -71,10 +59,7 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
     is_breed = isBreed();
     is_die = (age > one_year * lifespan);
     is_die = (coord.x<0 || coord.x>window_width || coord.y<0 || coord.y>window_height);
-    if (!is_die) Draw::circleDraw(int(coord.x), int(coord.y), plantE);
-}
-void Plant::bornSetCoord(const Vec2& sub_coord) {
-    coord = sub_coord;
+    if (!is_die) Draw::circleDraw(coord, plantE);
 }
 Vec2 Plant::getCoordinate() {
     return coord;
@@ -92,7 +77,7 @@ bool Plant::isBreed() {
 void Plant::born(std::vector<Plant>& plant,const Vec2& sub_coord,int& seeds_count)const {
     if (isInTheWindow(Vec2(sub_coord))) {
         plant.emplace_back();
-        plant[plant.size()-1].bornSetCoord(Vec2(sub_coord));
+        plant[plant.size() - 1].coord = Vec2(sub_coord);
         seeds_count++;
     }
 }
@@ -144,8 +129,6 @@ class Animal : public Creatures{
 private:
     double distance=100.0;
 protected:
-    double distination_x = window_width / 2.0;
-    double distination_y = window_height / 2.0;
     Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
 
 public:
@@ -154,13 +137,13 @@ public:
     //新しいY座標を設定
     int moveY();
     //新しい座標の設定
-    int move();
+    void move();
     //目的地にいるかどうかの判定
     bool isDistination() const;
     //目的地の設定
     void setDistination();
     //目的地との距離
-    void calculateDistance(const double ds_x, const double ds_y);
+    void calculateDistance(const Vec2& distination_coord);
 };
 
 
@@ -177,38 +160,20 @@ public:
 
 
 //動物クラス実装
-int Animal::moveX() {
+void Animal::move() {
     if (distance == 0.0) {
         setDistination();
-        calculateDistance(distination_x, distination_y);
-    }
-    const double dx = (distination_x - coord.x) / distance;
-    coord.x += dx;
-    return int(coord.x);
-}
-int Animal::moveY() {
-    if (distance == 0.0) {
-        setDistination();
-        calculateDistance( distination_x, distination_y);
-    }
-    const double dy = (distination_y - coord.y) / distance;
-    coord.y += dy;
-    return int(coord.y);
-}
-int Animal::move() {
-    if (distance == 0.0) {
-        setDistination();
-        calculateDistance(distination_x, distination_y);
+        calculateDistance(distination_coord);
     }
     const  Vec2 dCoord = Vec2((distination_coord.x - coord.x) / distance,(distination_coord.y - coord.y) / distance);
     coord = Vec2(coord.x+dCoord.x,coord.y+dCoord.y);
-    return int(coord.y);
+    Draw::circleDraw(coord, herbivoreE);
 }
 bool Animal::isDistination() const {
-    return ((coord.x - distination_x) < 1 && (coord.y - distination_y) < 1);
+    return ((coord.x - distination_coord.x) < 1.0 && (coord.y - distination_coord.y) < 1.0);
 }
-void Animal::calculateDistance( const double ds_x, const double ds_y) {
-    distance=std::sqrt(std::pow(coord.x - ds_x, 2) + std::pow(coord.y - ds_y, 2));
+void Animal::calculateDistance( const Vec2& distination_coord) {
+    distance=std::sqrt(std::pow(coord.x - distination_coord.x, 2) + std::pow(coord.y - distination_coord.y, 2));
 }
 void Animal::setDistination() {
     constexpr int MIN = 0;
@@ -218,8 +183,8 @@ void Animal::setDistination() {
     std::mt19937 eng(rd());
     std::uniform_int_distribution<int> wDistr(MIN, wMAX);
     std::uniform_int_distribution<int> hDistr(MIN, hMAX);
-    distination_x = wDistr(eng);
-    distination_y = hDistr(eng);
+    distination_coord.x = wDistr(eng);
+    distination_coord.y = hDistr(eng);
 }
 
 
@@ -230,12 +195,12 @@ void Herbivore::lifeActivity(const double mi_spf,bool& is_die) {
     age += spf;
     is_die = (age > one_year * lifespan);
     if (isDistination()) setDistination();
-    calculateDistance(distination_x,distination_y);
+    calculateDistance(distination_coord);
 }
 void Herbivore::behavior() {
     if (isDistination()) setDistination();
-    calculateDistance(distination_x, distination_y);
-    Draw::circleDraw(moveX(), moveY(), herbivoreE);
+    calculateDistance(distination_coord);
+    move();
 }
 
 

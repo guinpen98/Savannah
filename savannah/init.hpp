@@ -7,7 +7,7 @@ namespace System {
 }
 
 namespace Draw {
-    void circleDraw(const int x, const int y, const int animalID) {
+    void circleDraw(Vec2& coord, const int animalID) {
 
         unsigned int color = GetColor(255, 255, 255);
 
@@ -26,7 +26,7 @@ namespace Draw {
             break;
         }
 
-        DrawCircle(x, y, 5, color, TRUE);
+        DrawCircle(coord.x, coord.y, 5, color, TRUE);
     }
 };
 
