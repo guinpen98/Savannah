@@ -43,12 +43,12 @@ void Main() {
     std::bernoulli_distribution uid(0.01);
 
     //草食動物の生成
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 20; i++) {
         herbivore.emplace_back();
         herbivore.back().setCoord(Vec2(wDistr(eng), hDistr(eng)));
     }
     //植物生成
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 200; i++) {
         plantBorn(plant, Vec2(wDistr(eng), hDistr(eng)));
     }
 

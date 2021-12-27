@@ -10,6 +10,7 @@ protected:
     Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
     double max_satiety = one_year;
     double satiety = max_satiety*3.0/4.0;
+    double breed_period = 0.0;
 public:
     //新しい座標の設定
     void move();
@@ -25,6 +26,8 @@ public:
     void lifeActivity(const double mi_spf, bool& is_die);
     //繁殖期かどうかの判定
     bool isBreedingSeason();
+    //繁殖からの時間経過
+    void PassBreedPeriod();
 };
 
 //動物クラス実装
@@ -59,15 +62,20 @@ void Animal::setRandomDistination() {
     calculateDistinationDistance(distination_coord);
 }
 void Animal::setDistination(const Vec2 new_coord) {
-    distination_coord = new_coord;
+    if (isInTheWindow(new_coord)) distination_coord = new_coord;
+    else setRandomDistination();
     calculateDistinationDistance(distination_coord);
 }
 void Animal::lifeActivity(const double mi_spf, bool& is_die) {
     setSpf(mi_spf);
     getOld();
+    PassBreedPeriod();
     satiety -= getSpf();
-    is_die = (getAge() > one_year * lifespan||satiety<0);
+    is_die = (getAge() > one_year * lifespan || satiety < 0);
 }
 bool Animal::isBreedingSeason() {
-    return (satiety > max_satiety * 3.0 / 4.0&&getAge()>1.0*one_year);
+    return (satiety > max_satiety * 3.0 / 4.0&& getAge() > 2.0 * one_year && breed_period > one_year / 8.0);
+}
+void Animal::PassBreedPeriod() {
+    breed_period += getSpf();
 }
