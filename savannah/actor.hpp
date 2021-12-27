@@ -40,7 +40,7 @@ void plantBehavior(std::vector<Plant>& plant, const double mi_spf) {
     }
 }
 
-void herbivoreBehavior(std::vector<Herbivore>& herbivore, const double mi_spf) {
+void herbivoreBehavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& plant, const double mi_spf) {
     //草食動物それぞれの行動
     for (size_t i = 0; i < herbivore.size();) {
         auto& h = herbivore[i];
@@ -50,7 +50,7 @@ void herbivoreBehavior(std::vector<Herbivore>& herbivore, const double mi_spf) {
             herbivore.erase(herbivore.begin() + i);
         }
         else {
-            h.behavior();
+            herbivore[i].behavior(plant);
             i++;
         }
     }

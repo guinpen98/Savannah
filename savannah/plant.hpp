@@ -9,7 +9,7 @@ private:
 public:
     //コンストラクタ
     Plant() {
-        one_year = 2;
+        one_year = 1;
         lifespan = 5.0;
     }
     //生命活動

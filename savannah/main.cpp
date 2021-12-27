@@ -19,6 +19,8 @@ void Main() {
     //確率
     std::bernoulli_distribution uid(0.01);
 
+    //草食動物の生成
+    for (int i=0; i < 5; i++) herbivore.emplace_back();
     //植物生成
     for (int i = 0; i < 4; i++) {
         int seeds_count;
@@ -34,16 +36,12 @@ void Main() {
             new_time = std::chrono::system_clock::now();
 
             //ランダムで草食動物生成
-            if (uid(eng)) herbivore.emplace_back();
+            //if (uid(eng)) herbivore.emplace_back();
 
             const double mi_spf = double(std::chrono::duration_cast<std::chrono::milliseconds>(new_time - old_time).count());
 
             plantBehavior(plant, mi_spf);
-            herbivoreBehavior(herbivore, mi_spf);
-
-
-
+            herbivoreBehavior(herbivore,plant, mi_spf);
         }
-
     }
 }
