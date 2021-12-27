@@ -20,6 +20,16 @@ struct Vec2 {
 	Vec2(const double ix, const double iy)
 		:x(ix), y(iy) {}
 
+	//Vec2同士の距離の二乗
+	double distance(const Vec2& coord) const {
+		return ((x - coord.x) * (x - coord.x) + (y - coord.y) * (y - coord.y));
+	}
+
+	//Vec2同士の足し算
+	Vec2 operator+(const Vec2& coord) const {
+		return Vec2(x + coord.x, y + coord.y);
+	}
+
 };
 
 //生物クラス
@@ -47,6 +57,10 @@ public:
 	Vec2 getCoord()const;
 	//座標の更新
 	void setCoord(const Vec2& new_coord);
+	//一年が何秒かの値を渡す
+	int getOneYear()const;
+	//寿命の値を渡す
+	int getLifespan()const;
 };
 
 //生物クラス実装
@@ -70,4 +84,10 @@ Vec2 Creatures::getCoord() const{
 }
 void Creatures::setCoord(const Vec2& new_coord) {
 	coord = Vec2(new_coord);
+}
+int Creatures::getOneYear()const {
+	return one_year;
+}
+int Creatures::getLifespan()const {
+	return lifespan;
 }

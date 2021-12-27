@@ -8,8 +8,8 @@ private:
     double distance = 100.0;
 protected:
     Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
-    double maxSatiety = one_year * 2;
-    double satiety = maxSatiety;
+    double max_satiety = one_year;
+    double satiety = max_satiety*3.0/4.0;
 public:
     //新しい座標の設定
     void move();
@@ -36,8 +36,7 @@ void Animal::move() {
     Vec2 const coord = getCoord();
     const double spf = getSpf();
     const  Vec2 dCoord = Vec2((distination_coord.x - coord.x) / distance*spf*60, (distination_coord.y - coord.y) / distance*spf*60);
-    setCoord (Vec2(coord.x + dCoord.x, coord.y + dCoord.y));
-    Draw::circleDraw(coord, herbivoreE);
+    setCoord(coord + dCoord);
 }
 bool Animal::isDistination() {
     const Vec2 coord = getCoord();
@@ -70,5 +69,5 @@ void Animal::lifeActivity(const double mi_spf, bool& is_die) {
     is_die = (getAge() > one_year * lifespan||satiety<0);
 }
 bool Animal::isBreedingSeason() {
-    return (satiety > maxSatiety * 3.0 / 4.0);
+    return (satiety > max_satiety * 3.0 / 4.0&&getAge()>1.0*one_year);
 }

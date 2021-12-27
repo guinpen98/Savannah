@@ -1,4 +1,4 @@
 #pragma once
 
-constexpr int window_width = 480;
-constexpr int window_height = 270;
+constexpr int window_width = 1280;
+constexpr int window_height = 720;

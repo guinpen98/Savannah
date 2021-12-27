@@ -5,29 +5,52 @@
 #include <chrono>
 
 
-
+void DrawHerbivore(const std::vector<Herbivore>& herbivore) {
+    for (const auto& h : herbivore) {
+        const double ext_rate = 0.05 * (1.0 + h.getAge() / h.getOneYear() / h.getLifespan());
+        switch (h.herbivore_state)
+        {
+        case herbivoreWanderE:
+            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, shimauma1, TRUE);
+            break;
+        case herbivoreForageE:
+            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, shimauma2, TRUE);
+            break;
+        case herbivoreBreedE:
+            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, shimauma3, TRUE);
+            break;
+        default:
+            break;
+        }
+    }
+}
 
 void Main() {
     //配列の確保
     std::vector<Herbivore> herbivore;
-    std::vector<Plant> plant;
+    std::vector<Plant> plant; plant.reserve(100000);
     //時間
     std::chrono::system_clock::time_point  old_time, new_time = std::chrono::system_clock::now();
     //ランダム
+    constexpr int MIN = 0;
+    constexpr int wMAX = window_width;
+    constexpr int hMAX = window_height;
     std::random_device rd;
     std::mt19937 eng(rd());
+    std::uniform_int_distribution<int> wDistr(MIN, wMAX);
+    std::uniform_int_distribution<int> hDistr(MIN, hMAX);
     //確率
     std::bernoulli_distribution uid(0.01);
 
     //草食動物の生成
-    for (int i=0; i < 5; i++) herbivore.emplace_back();
-    //植物生成
-    for (int i = 0; i < 4; i++) {
-        int seeds_count;
-        plant.emplace_back();
-        plant[i].born(plant,Vec2(i * 15.0+50.0, i * 25.0+20.0),seeds_count);
+    for (int i = 0; i < 30; i++) {
+        herbivore.emplace_back();
+        herbivore.back().setCoord(Vec2(wDistr(eng), hDistr(eng)));
     }
-    plant.emplace_back();
+    //植物生成
+    for (int i = 0; i < 1000; i++) {
+        plantBorn(plant, Vec2(wDistr(eng), hDistr(eng)));
+    }
 
     while (System::Update()) {
         for (int k = 0; k < 1; k++) {
@@ -42,6 +65,7 @@ void Main() {
 
             plantBehavior(plant, mi_spf);
             herbivoreBehavior(herbivore,plant, mi_spf);
+            DrawHerbivore(herbivore);
         }
     }
 }
