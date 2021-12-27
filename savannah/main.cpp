@@ -38,7 +38,7 @@ void Main() {
 
             const double mi_spf = double(std::chrono::duration_cast<std::chrono::milliseconds>(new_time - old_time).count());
 
-            plantLifeActivity(plant, mi_spf);
+            plantBehavior(plant, mi_spf);
             herbivoreBehavior(herbivore, mi_spf);
 
 

@@ -14,8 +14,11 @@ public:
     }
     //生命活動
     void lifeActivity(const double mi_spf, bool& is_die, bool& is_breed);
+    //他の植物と被っているかの判定
     bool isCover(const Vec2& sub_coord);
+    //繁殖判定
     bool isBreed();
+    //植物の生成
     void born(std::vector<Plant>& plant, const Vec2& sub_coord, int& seeds_count)const;
 };
 
