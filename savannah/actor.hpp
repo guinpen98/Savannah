@@ -4,6 +4,8 @@
 #include <cmath>
 #include<vector>
 
+
+
 struct Vec2 {
     double x=0.0, y=0.0;
 
@@ -28,10 +30,16 @@ protected:
 public:
     //計測した1フレームあたりの秒数を設定する
     void setSpf(const double mi_spf);
+    //画面内にいるかどうかの判定
+    bool isInTheWindow(const Vec2& sub_coord)const;
 };
+
 //生物クラス実装
 void Creatures::setSpf(const double mi_spf) {
     spf = mi_spf / 1000.0;
+}
+bool Creatures::isInTheWindow(const Vec2& sub_coord)const{
+    return (sub_coord.x > 0&&sub_coord.x<window_width&&sub_coord.y>0&&sub_coord.y<window_height);
 }
 
 
@@ -47,11 +55,13 @@ public:
     }
 
     void lifeActivity(const double mi_spf, bool& is_die,bool& is_breed);
-    void born(const Vec2& sub_coord);
+    void bornSetCoord(const Vec2& sub_coord);
     Vec2 getCoordinate();
     bool isCover(const Vec2& sub_coord) const;
     bool isBreed();
+    void born(std::vector<Plant>& plant, const Vec2& sub_coord, int& seeds_count)const;
 };
+void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf);
 
 //植物クラス実装
 void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
@@ -63,7 +73,7 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die,bool& is_breed) {
     is_die = (coord.x<0 || coord.x>window_width || coord.y<0 || coord.y>window_height);
     if (!is_die) Draw::circleDraw(int(coord.x), int(coord.y), plantE);
 }
-void Plant::born(const Vec2& sub_coord) {
+void Plant::bornSetCoord(const Vec2& sub_coord) {
     coord = sub_coord;
 }
 Vec2 Plant::getCoordinate() {
@@ -78,6 +88,55 @@ bool Plant::isBreed() {
         return true;
     }
     return false;
+}
+void Plant::born(std::vector<Plant>& plant,const Vec2& sub_coord,int& seeds_count)const {
+    if (isInTheWindow(Vec2(sub_coord))) {
+        plant.emplace_back();
+        plant[plant.size()-1].bornSetCoord(Vec2(sub_coord));
+        seeds_count++;
+    }
+}
+void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
+    //植物それぞれの生命活動
+    for (size_t i = 0; i < plant.size();) {
+        bool plant_is_die, plant_is_breed;
+        plant[i].lifeActivity(mi_spf, plant_is_die, plant_is_breed);
+        //植物の繁殖
+        if (plant_is_breed) {
+            //植物の座標
+            const Vec2 plant_c = plant[i].getCoordinate();
+            const unsigned int plant_size = plant.size();
+            int seeds_count = 0;
+            plant[i].born(plant,Vec2(plant_c.x - 10, plant_c.y),seeds_count);
+            plant[i].born(plant,Vec2(plant_c.x + 10, plant_c.y),seeds_count);
+            plant[i].born(plant,Vec2(plant_c.x, plant_c.y - 10),seeds_count);
+            plant[i].born(plant,Vec2(plant_c.x, plant_c.y + 10),seeds_count);
+            //植物が他の植物に被っている場合死ぬ
+
+
+            for (int k = 0; k < seeds_count; k++) {
+                for (size_t j = 0; j < plant_size; j++) {
+                    //植物の座標
+                    const Vec2 plant_c = plant[j].getCoordinate();
+                    if (plant[plant_size + k].isCover(plant_c)) {
+                        plant.erase(plant.begin() + plant_size + k);
+                        seeds_count--;
+                        k--;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //植物の死
+        if (plant_is_die) {
+            plant.erase(plant.begin() + i);
+        }
+        else {
+            i++;
+        }
+    }
+
 }
 
 //動物クラス
@@ -182,48 +241,7 @@ void Herbivore::behavior() {
 
 
 
-void plantLifeActivity(std::vector<Plant>& plant, const double mi_spf) {
-    //植物それぞれの生命活動
-    for (size_t i = 0; i < plant.size();) {
-        bool plant_is_die, plant_is_breed;
-        plant[i].lifeActivity(mi_spf, plant_is_die, plant_is_breed);
-        //植物の繁殖
-        if (plant_is_breed) {
-            //植物の座標
-            const Vec2 plant_c = plant[i].getCoordinate();
-            const unsigned int plant_size = plant.size();
-            plant.emplace_back();
-            plant[plant_size].born(Vec2(plant_c.x - 10, plant_c.y));
-            plant.emplace_back();
-            plant[plant_size + 1].born(Vec2(plant_c.x + 10, plant_c.y));
-            plant.emplace_back();
-            plant[plant_size + 2].born(Vec2(plant_c.x, plant_c.y - 10));
-            plant.emplace_back();
-            plant[plant_size + 3].born(Vec2(plant_c.x, plant_c.y + 10));
-            //植物が他の植物に被っている場合死ぬ
-            int seeds_count = 4;
-            for (size_t j = 0; j < plant_size; j++) {
-                //植物の座標
-                const Vec2 plant_c = plant[j].getCoordinate();     
-                for(int k=0;k<seeds_count;k++)
-                    if (plant[plant_size + k].isCover(plant_c)) {
-                        plant.erase(plant.begin() + plant_size + k);
-                        seeds_count--;
-                        k--;
-                    }
-            }
-        }
-        
-        //植物の死
-        if (plant_is_die) {
-            plant.erase(plant.begin() + i);
-        }
-        else {
-            i++;
-        }
-    }
 
-}
 
 void herbivoreBehavior(std::vector<Herbivore>& herbivore, const double mi_spf) {
     //草食動物それぞれの行動
