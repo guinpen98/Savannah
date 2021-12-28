@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="actor.hpp" />
     <ClInclude Include="animal.hpp" />
+    <ClInclude Include="carnivore.hpp" />
     <ClInclude Include="configuration.h" />
     <ClInclude Include="creatures.hpp" />
     <ClInclude Include="herbivore.hpp" />

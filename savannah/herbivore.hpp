@@ -16,6 +16,7 @@ public:
     Herbivore() {
         lifespan = 20.0;
         one_year = 24;
+        breed_age = one_year * 2.0;
     }
     //行動
     void behavior(std::vector<Herbivore>& herbivore,std::vector<Plant>& plant,const size_t i);
@@ -103,14 +104,16 @@ void Herbivore::herbivoreBreed(std::vector<Herbivore>& herbivore, const size_t h
     else setDistination(herbivore[s].getCoord());
 }
 void Herbivore::born(const Vec2& born_coord, std::vector<Herbivore>& herbivore,const int s) {
+    if (!isBreedingSeason()) return;
+    if (!herbivore[s].isBreedingSeason()) return;
     herbivore.emplace_back();
     herbivore.back().setCoord(born_coord);
     satiety -= one_year / 2.0;
     herbivore_state = herbivoreWanderE;
-    breed_period = 0.0;
+    breed_count = 0.0;
     herbivore[s].satiety -= one_year / 2.0;
     herbivore[s].herbivore_state = herbivoreWanderE;
-    herbivore[s].breed_period = 0.0;
+    herbivore[s].breed_count = 0.0;
 
 }
 int Herbivore::getHerbivoreState() {

@@ -2,6 +2,7 @@
 #include"init.hpp"
 #include"plant.hpp"
 #include"herbivore.hpp"
+#include"carnivore.hpp"
 #include<vector>
 
 bool isInTheWindow(const Vec2& sub_coord) {
@@ -55,6 +56,22 @@ void herbivoreBehavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& pl
         }
         else {
             herbivore[i].behavior(herbivore,plant,i);
+            i++;
+        }
+    }
+}
+
+void carnivoreBehavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const double mi_spf) {
+    //肉食動物それぞれの行動
+    for (size_t i = 0; i < carnivore.size();) {
+        auto& c = carnivore[i];
+        bool carnivore_is_die;
+        c.lifeActivity(mi_spf, carnivore_is_die);
+        if (carnivore_is_die) {
+            carnivore.erase(carnivore.begin() + i);
+        }
+        else {
+            carnivore[i].behavior(carnivore, herbivore, i);
             i++;
         }
     }

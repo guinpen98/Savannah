@@ -24,13 +24,20 @@ void DrawHerbivore(const std::vector<Herbivore>& herbivore) {
         }
     }
 }
+void DrawCarnivore(const std::vector<Carnivore>& carnivore) {
+    for (const auto& c : carnivore) {
+        Draw::oldDraw(c.getCoord(), carnivoreE);
+    }
+}
 
 void Main() {
     //配列の確保
     std::vector<Herbivore> herbivore;
     std::vector<Plant> plant; plant.reserve(100000);
+    std::vector<Carnivore> carnivore;
     //時間
     std::chrono::system_clock::time_point  old_time, new_time = std::chrono::system_clock::now();
+    double pass_time = 0.0;
     //ランダム
     constexpr int MIN = 0;
     constexpr int wMAX = window_width;
@@ -43,9 +50,14 @@ void Main() {
     std::bernoulli_distribution uid(0.01);
 
     //草食動物の生成
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 50; i++) {
         herbivore.emplace_back();
         herbivore.back().setCoord(Vec2(wDistr(eng), hDistr(eng)));
+    }
+    //肉食動物の生成
+    for (int i = 0; i < 5; i++) {
+        carnivore.emplace_back();
+        carnivore.back().setCoord(Vec2(wDistr(eng), hDistr(eng)));
     }
     //植物生成
     for (int i = 0; i < 200; i++) {
@@ -65,7 +77,14 @@ void Main() {
 
             plantBehavior(plant, mi_spf);
             herbivoreBehavior(herbivore,plant, mi_spf);
+            carnivoreBehavior(carnivore,herbivore, mi_spf);
             DrawHerbivore(herbivore);
+            DrawCarnivore(carnivore);
+
+
+            pass_time += mi_spf/1000.0;
+            unsigned int Color = GetColor(255, 255, 255);
+            DrawFormatString(0, 0, Color, "%d", int(pass_time / 24 ));
         }
     }
 }
