@@ -25,14 +25,14 @@ public:
     double distance(const Vec2& herbivore_coord)const;
 
     //食事
-    void eat(std::vector<Herbivore>& herbivore, const int s);
+    void eat(std::vector<Herbivore>& herbivore, const size_t s);
 
     //肉食動物の近くにある草食動物物を探す
-    void isCloseToHerbivores(const std::vector<Herbivore>& herbivore, int& s, bool& is_can_eat);
+    void isCloseToHerbivores(const std::vector<Herbivore>& herbivore, size_t& s, bool& is_can_eat);
     //繁殖
     void carnivoreBreed(std::vector<Carnivore>& carnivore, const size_t hs);
     //子供が生まれる
-    void born(const Vec2& born_coord, std::vector<Carnivore>& carnivore, const int s);
+    void born(const Vec2& born_coord, std::vector<Carnivore>& carnivore, const size_t s);
     //ステートの値を渡す
     int getCarnivoreState();
     //ステートの変更
@@ -43,15 +43,15 @@ public:
 void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs) {
     if (isBreedingSeason()) {
         carnivore_state = carnivoreBreedE;
-        carnivoreBreed(carnivore, int(hs));
+        carnivoreBreed(carnivore, hs);
         if (isDistination()) setRandomDistination();
     }
     else if (satiety < max_satiety * 3.0 / 4.0) {
         //肉食物にの視界のなかにあって、最も近い草食動物の添え字
-        int s = -1;
+        size_t s = (std::numeric_limits<size_t>::max)();
         bool is_can_eat;
         isCloseToHerbivores(herbivore, s, is_can_eat);
-        if (s != -1) {
+        if (s != (std::numeric_limits<size_t>::max)()) {
             carnivore_state = carnivoreForageE;
             setDistination(herbivore[s].getCoord());
             if (is_can_eat) eat(herbivore, s);
@@ -67,7 +67,7 @@ void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivor
     }
     move();
 }
-void Carnivore::isCloseToHerbivores(const std::vector<Herbivore>& herbivore, int& s, bool& is_can_eat) {
+void Carnivore::isCloseToHerbivores(const std::vector<Herbivore>& herbivore, size_t& s, bool& is_can_eat) {
     double min_distance = 50000.0;
     for (size_t i = 0; i < herbivore.size(); i++) {
         //最小距離以上の長さの場合は返す
@@ -81,14 +81,14 @@ void Carnivore::isCloseToHerbivores(const std::vector<Herbivore>& herbivore, int
 double Carnivore::distance(const Vec2& herbivore_coord) const {
     return getCoord().distance(herbivore_coord);
 }
-void Carnivore::eat(std::vector<Herbivore>& herbivore, const int s) {
+void Carnivore::eat(std::vector<Herbivore>& herbivore, const size_t s) {
     herbivore.erase(herbivore.begin() + s);
     satiety += one_year / 2.0;
     if (satiety > max_satiety) satiety = max_satiety;
 }
 void Carnivore::carnivoreBreed(std::vector<Carnivore>& carnivore, const size_t hs) {
     double min_distance = (std::numeric_limits<double>::max)();
-    int s = -1;
+    size_t s = (std::numeric_limits<size_t>::max)();
     for (size_t i = 0; i < carnivore.size(); i++) {
         //同じ個体の場合は返す
         if (i == hs) continue;
@@ -98,13 +98,13 @@ void Carnivore::carnivoreBreed(std::vector<Carnivore>& carnivore, const size_t h
         min_distance = distance(carnivore[i].getCoord());
         s = i;
     }
-    if (s == -1) return;
+    if (s == (std::numeric_limits<size_t>::max)()) return;
     if (min_distance < 4) {
         born(getCoord(), carnivore, s);
     }
     else setDistination(carnivore[s].getCoord());
 }
-void Carnivore::born(const Vec2& born_coord, std::vector<Carnivore>& carnivore, const int s) {
+void Carnivore::born(const Vec2& born_coord, std::vector<Carnivore>& carnivore, const size_t s) {
     carnivore.emplace_back();
     carnivore.back().setCoord(born_coord);
     satiety -= one_year / 4.0;

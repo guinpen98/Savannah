@@ -30,8 +30,8 @@ void Plant::lifeActivity(const double mi_spf, bool& is_die, bool& is_breed) {
     breed += getSpf();
     is_breed = isBreed();
     is_die = (getAge() > one_year * lifespan);
-    Vec2 coord = getCoord();
-    is_die = (coord.x<0 || coord.x>window_width || coord.y<0 || coord.y>window_height);
+    Vec2 temp_coord = getCoord();
+    is_die = (temp_coord.x<0 || temp_coord.x>window_width || temp_coord.y<0 || temp_coord.y>window_height);
 }
 bool Plant::isCover(const Vec2& sub_coord)  {
     return (getCoord().distance(sub_coord) < 100.0);

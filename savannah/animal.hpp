@@ -24,7 +24,7 @@ public:
     //目的地の設定
     void setDistination(const Vec2 new_coord);
     //目的地との距離
-    void calculateDistinationDistance(const Vec2& distination_coord);
+    void calculateDistinationDistance();
     //生命活動を管理
     void lifeActivity(const double mi_spf, bool& is_die);
     //繁殖期かどうかの判定
@@ -38,17 +38,17 @@ void Animal::move() {
     if (distance == 0.0) {
         setRandomDistination();
     }
-    calculateDistinationDistance(distination_coord);
-    Vec2 const coord = getCoord();
-    const double spf = getSpf();
-    const  Vec2 dCoord = Vec2((distination_coord.x - coord.x) / distance*spf*60, (distination_coord.y - coord.y) / distance*spf*60);
-    setCoord(coord + dCoord);
+    calculateDistinationDistance();
+    const Vec2 temp_coord = getCoord();
+    const double temp_spf = getSpf();
+    const  Vec2 dCoord = Vec2((distination_coord.x - temp_coord.x) / distance*temp_spf*60, (distination_coord.y - temp_coord.y) / distance*temp_spf*60);
+    setCoord(temp_coord + dCoord);
 }
 bool Animal::isDistination() {
-    const Vec2 coord = getCoord();
-    return ((coord.x - distination_coord.x) < 1.0 && (coord.y - distination_coord.y) < 1.0);
+    const Vec2 temp_coord = getCoord();
+    return ((temp_coord.x - distination_coord.x) < 1.0 && (temp_coord.y - distination_coord.y) < 1.0);
 }
-void Animal::calculateDistinationDistance(const Vec2& distination_coord) {
+void Animal::calculateDistinationDistance() {
     distance = std::sqrt(getCoord().distance(distination_coord));
 }
 void Animal::setRandomDistination() {
@@ -61,12 +61,12 @@ void Animal::setRandomDistination() {
     std::uniform_int_distribution<int> hDistr(MIN, hMAX);
     distination_coord.x = wDistr(eng);
     distination_coord.y = hDistr(eng);
-    calculateDistinationDistance(distination_coord);
+    calculateDistinationDistance();
 }
 void Animal::setDistination(const Vec2 new_coord) {
     if (isInTheWindow(new_coord)) distination_coord = new_coord;
     else setRandomDistination();
-    calculateDistinationDistance(distination_coord);
+    calculateDistinationDistance();
 }
 void Animal::lifeActivity(const double mi_spf, bool& is_die) {
     setSpf(mi_spf);
