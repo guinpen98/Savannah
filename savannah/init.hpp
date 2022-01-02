@@ -6,9 +6,13 @@ namespace System {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
 }
 
-int shimauma1 = 0;
-int shimauma2 = 0;
-int shimauma3 = 0;
+int zebra1 = 0;
+int zebra2 = 0;
+int zebra3 = 0;
+int lion1 = 0;
+int lion2 = 0;
+int lion3 = 0;
+int grass1 = 0;
 
 namespace Draw {
     void oldDraw(const Vec2& coord, const int animalID) {
@@ -23,7 +27,7 @@ namespace Draw {
             break;
         case herbivoreE:
             //color = GetColor(0, 0, 255);
-            DrawRotaGraph(int(coord.x), int(coord.y), 0.05f, 0, shimauma1, TRUE);
+            DrawRotaGraph(int(coord.x), int(coord.y), 0.05f, 0, zebra1, TRUE);
             break;
         case carnivoreE:
             color = GetColor(255, 0, 0);
@@ -47,12 +51,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     DxLib::SetMainWindowText("Sample");
     if (DxLib::DxLib_Init() == -1) return -1;
     DxLib::SetDrawScreen(DX_SCREEN_BACK);
-    shimauma1 = LoadGraph("animal_shimauma1.png");
-    shimauma2 = LoadGraph("animal_shimauma2.png");
-    shimauma3 = LoadGraph("animal_shimauma3.png");
+    zebra1 = LoadGraph("zebra1.png");
+    zebra2 = LoadGraph("zebra2.png");
+    zebra3 = LoadGraph("zebra3.png");
+    lion1 = LoadGraph("lion1.png");
+    lion2 = LoadGraph("lion2.png");
+    lion3 = LoadGraph("lion3.png");
+    grass1 = LoadGraph("grass.png");
     Main();
-    DeleteGraph(shimauma1);
-    DeleteGraph(shimauma2);
-    DeleteGraph(shimauma3);
+    DeleteGraph(zebra1);
+    DeleteGraph(zebra2);
+    DeleteGraph(zebra3);
     return DxLib::DxLib_End();
 }

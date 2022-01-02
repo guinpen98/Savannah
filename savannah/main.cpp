@@ -11,13 +11,13 @@ void DrawHerbivore(const std::vector<Herbivore>& herbivore) {
         switch (h.herbivore_state)
         {
         case herbivoreWanderE:
-            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, shimauma1, TRUE);
+            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, zebra1, TRUE);
             break;
         case herbivoreForageE:
-            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, shimauma2, TRUE);
+            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, zebra2, TRUE);
             break;
         case herbivoreBreedE:
-            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, shimauma3, TRUE);
+            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, zebra3, TRUE);
             break;
         default:
             break;
@@ -26,7 +26,28 @@ void DrawHerbivore(const std::vector<Herbivore>& herbivore) {
 }
 void DrawCarnivore(const std::vector<Carnivore>& carnivore) {
     for (const auto& c : carnivore) {
-        Draw::oldDraw(c.getCoord(), carnivoreE);
+        const double ext_rate = 0.05 * (1.0 + c.getAge() / c.getOneYear() / c.getLifespan());
+        switch (c.carnivore_state)
+        {
+        case carnivoreWanderE:
+            DrawRotaGraph(int(c.getCoord().x), int(c.getCoord().y), float(ext_rate), 0, lion1, TRUE);
+            break;
+        case carnivoreForageE:
+            DrawRotaGraph(int(c.getCoord().x), int(c.getCoord().y), float(ext_rate), 0, lion2, TRUE);
+            break;
+        case carnivoreBreedE:
+            DrawRotaGraph(int(c.getCoord().x), int(c.getCoord().y), float(ext_rate), 0, lion3, TRUE);
+            break;
+        default:
+            break;
+        }
+    }
+}
+void DrawPlant(const std::vector<Plant>& plant) {
+    for (const auto& p : plant) {
+        const double ext_rate = 0.05;
+        const double age = p.getAge();
+        DrawRotaGraph(int(p.getCoord().x), int(p.getCoord().y), float(ext_rate), 0, grass1, TRUE);
     }
 }
 
@@ -78,6 +99,7 @@ void Main() {
             plantBehavior(plant, mi_spf);
             herbivoreBehavior(herbivore,plant, mi_spf);
             carnivoreBehavior(carnivore,herbivore, mi_spf);
+            DrawPlant(plant);
             DrawHerbivore(herbivore);
             DrawCarnivore(carnivore);
 
