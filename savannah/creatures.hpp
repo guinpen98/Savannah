@@ -37,7 +37,7 @@ struct Vec2 {
 class Creatures {
 private:
 	//座標
-	Vec2 coord = Vec2(window_width / 2.0, window_height / 2.0);
+	Vec2 coord = Vec2(field_width / 2.0, field_height / 2.0);
 	double spf = 0.0;
 	double age = 0.0;
 protected:
@@ -78,7 +78,7 @@ double Creatures::getAge()const {
 	return age;
 }
 bool Creatures::isInTheWindow(const Vec2& sub_coord)const {
-	return (sub_coord.x > 0 && sub_coord.x < window_width&& sub_coord.y>0 && sub_coord.y < window_height);
+	return (sub_coord.x > 0 && sub_coord.x < field_width&& sub_coord.y>0 && sub_coord.y < field_height);
 }
 Vec2 Creatures::getCoord() const{
 	return coord;

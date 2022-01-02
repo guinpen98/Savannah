@@ -7,7 +7,7 @@
 #include<vector>
 
 bool isInTheWindow(const Vec2& sub_coord) {
-    return (sub_coord.x > 0 && sub_coord.x < window_width&& sub_coord.y>0 && sub_coord.y < window_height);
+    return (sub_coord.x > 0 && sub_coord.x < field_width&& sub_coord.y>0 && sub_coord.y < field_height);
 }
 bool plantIsCover(std::vector<Plant>& plant, const Vec2& born_coord) {
     for (size_t j = 0; j < plant.size(); j++) {

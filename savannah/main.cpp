@@ -5,49 +5,54 @@
 #include <chrono>
 
 
-void DrawHerbivore(const std::vector<Herbivore>& herbivore) {
+void DrawHerbivore(const std::vector<Herbivore>& herbivore,const int camera_x,const int camera_y, const double camera_exrate) {
     for (const auto& h : herbivore) {
-        const double ext_rate = 0.05 * (1.0 + h.getAge() / h.getOneYear() / h.getLifespan());
+        const double ext_rate = 0.05 * (1.0 + h.getAge() / h.getOneYear() / h.getLifespan())* camera_exrate;
+        int zebra_picture = zebra1;
         switch (h.herbivore_state)
         {
         case herbivoreWanderE:
-            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, zebra1, TRUE);
+            zebra_picture = zebra1;
             break;
         case herbivoreForageE:
-            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, zebra2, TRUE);
+            zebra_picture = zebra2;
             break;
         case herbivoreBreedE:
-            DrawRotaGraph(int(h.getCoord().x), int(h.getCoord().y), float(ext_rate), 0, zebra3, TRUE);
+            zebra_picture = zebra3;
             break;
         default:
             break;
+
         }
+        DrawRotaGraph((int(h.getCoord().x) - camera_x)* camera_exrate, (int(h.getCoord().y) - camera_y)* camera_exrate, float(ext_rate), 0, zebra_picture, TRUE);
     }
 }
-void DrawCarnivore(const std::vector<Carnivore>& carnivore) {
+void DrawCarnivore(const std::vector<Carnivore>& carnivore, const int camera_x, const int camera_y,const double camera_exrate) {
     for (const auto& c : carnivore) {
-        const double ext_rate = 0.05 * (1.0 + c.getAge() / c.getOneYear() / c.getLifespan());
+        const double ext_rate = 0.05 * (1.0 + c.getAge() / c.getOneYear() / c.getLifespan())* camera_exrate;
+        int lion_picture = lion1;
         switch (c.carnivore_state)
         {
         case carnivoreWanderE:
-            DrawRotaGraph(int(c.getCoord().x), int(c.getCoord().y), float(ext_rate), 0, lion1, TRUE);
+            lion_picture = lion1;
             break;
         case carnivoreForageE:
-            DrawRotaGraph(int(c.getCoord().x), int(c.getCoord().y), float(ext_rate), 0, lion2, TRUE);
+            lion_picture = lion2;
             break;
         case carnivoreBreedE:
-            DrawRotaGraph(int(c.getCoord().x), int(c.getCoord().y), float(ext_rate), 0, lion3, TRUE);
+            lion_picture = lion3;
             break;
         default:
             break;
         }
+        DrawRotaGraph((int(c.getCoord().x) - camera_x)* camera_exrate, (int(c.getCoord().y) - camera_y)* camera_exrate, float(ext_rate), 0, lion_picture, TRUE);
     }
 }
-void DrawPlant(const std::vector<Plant>& plant) {
+void DrawPlant(const std::vector<Plant>& plant,const int camera_x, const int camera_y, const double camera_exrate) {
     for (const auto& p : plant) {
-        const double ext_rate = 0.05;
+        const double ext_rate = 0.05* camera_exrate;
         const double age = p.getAge();
-        DrawRotaGraph(int(p.getCoord().x), int(p.getCoord().y), float(ext_rate), 0, grass1, TRUE);
+        DrawRotaGraph((int(p.getCoord().x) - camera_x) * camera_exrate, (int(p.getCoord().y) - camera_y) * camera_exrate, float(ext_rate), 0, grass1, TRUE);
     }
 }
 
@@ -61,8 +66,8 @@ void Main() {
     double pass_time = 0.0;
     //ランダム
     constexpr int MIN = 0;
-    constexpr int wMAX = window_width;
-    constexpr int hMAX = window_height;
+    constexpr int wMAX = field_width;
+    constexpr int hMAX = field_height;
     std::random_device rd;
     std::mt19937 eng(rd());
     std::uniform_int_distribution<int> wDistr(MIN, wMAX);
@@ -84,8 +89,30 @@ void Main() {
     for (int i = 0; i < 200; i++) {
         plantBorn(plant, Vec2(wDistr(eng), hDistr(eng)));
     }
+    char key_state[256];
+    int camera_x = 0;
+    int camera_y = 0;
+    const int camera_move_distance = 3;
+    const double camera_change_exrate = 0.01;
+    double camera_exrate = 1;
+    
 
     while (System::Update()) {
+        GetHitKeyStateAll(key_state);
+        if (key_state[KEY_INPUT_E])
+            if (camera_exrate <= 5)
+                camera_exrate += camera_change_exrate;
+        if (key_state[KEY_INPUT_Q])
+            if (camera_exrate >= 1)
+                camera_exrate -= camera_change_exrate;
+        if (key_state[KEY_INPUT_A] || key_state[KEY_INPUT_LEFT])
+            if(camera_x>=0) camera_x -= camera_move_distance;
+        if (key_state[KEY_INPUT_D] || key_state[KEY_INPUT_RIGHT])
+            if (camera_x <= field_width-window_width/camera_exrate) camera_x += camera_move_distance;
+        if (key_state[KEY_INPUT_W] || key_state[KEY_INPUT_UP])
+            if (camera_y >= 0) camera_y -= camera_move_distance;
+        if (key_state[KEY_INPUT_S] || key_state[KEY_INPUT_DOWN])
+            if (camera_y <= field_height-window_height/camera_exrate) camera_y += camera_move_distance;
         for (int k = 0; k < 1; k++) {
             //1フレームあたりの時間計測
             old_time = new_time;
@@ -99,9 +126,9 @@ void Main() {
             plantBehavior(plant, mi_spf);
             herbivoreBehavior(herbivore,plant, mi_spf);
             carnivoreBehavior(carnivore,herbivore, mi_spf);
-            DrawPlant(plant);
-            DrawHerbivore(herbivore);
-            DrawCarnivore(carnivore);
+            DrawPlant(plant,camera_x,camera_y, camera_exrate);
+            DrawHerbivore(herbivore,camera_x,camera_y, camera_exrate);
+            DrawCarnivore(carnivore,camera_x,camera_y, camera_exrate);
 
 
             pass_time += mi_spf/1000.0;

@@ -8,7 +8,7 @@ class Animal : public Creatures {
 private:
     double distance = 100.0;
 protected:
-    Vec2 distination_coord = Vec2(window_width / 2.0, window_height / 2.0);
+    Vec2 distination_coord = Vec2(field_width / 2.0, field_height / 2.0);
     double max_satiety = one_year;
     double satiety = max_satiety;
     double breed_count = 0.0;
@@ -53,8 +53,8 @@ void Animal::calculateDistinationDistance() {
 }
 void Animal::setRandomDistination() {
     constexpr int MIN = 0;
-    constexpr int wMAX = window_width;
-    constexpr int hMAX = window_height;
+    constexpr int wMAX = field_width;
+    constexpr int hMAX = field_height;
     std::random_device rd;
     std::mt19937 eng(rd());
     std::uniform_int_distribution<int> wDistr(MIN, wMAX);
