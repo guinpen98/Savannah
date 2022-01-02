@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAVANNAH_CARNIVORE_HPP
+#define SAVANNAH_CARNIVORE_HPP
 #include"animal.hpp"
 
 enum CarnivoreStateE :int {
@@ -120,3 +121,4 @@ int Carnivore::getCarnivoreState() {
 void Carnivore::setCarnivoreState(enum CarnivoreStateE new_state) {
     carnivore_state = new_state;
 }
+#endif // !SAVANNAH_CARNIVORE_HPP

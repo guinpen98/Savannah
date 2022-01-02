@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAVANNAH_HERNIVORE_HPP
+#define SAVANNAH_HERNIVORE_HPP
 #include"animal.hpp"
 #include <limits>
 
@@ -122,3 +123,4 @@ int Herbivore::getHerbivoreState() {
 void Herbivore::setHerbivoreState(enum HerbivoreStateE new_state) {
     herbivore_state = new_state;
 }
+#endif // !SAVANNAH_HERNIVORE_HPP

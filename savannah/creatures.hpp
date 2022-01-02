@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAVANNAH_CREATURES_HPP
+#define SAVANNAH_CREATURES_HPP
 #include"configuration.h"
 #include <cmath>
 
@@ -91,3 +92,4 @@ int Creatures::getOneYear()const {
 double Creatures::getLifespan()const {
 	return lifespan;
 }
+#endif // !SAVANNAH_CREATURES_HPP

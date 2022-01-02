@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAVANNAH_ANIMAL_HPP
+#define SAVANNAH_ANIMAL_HPP
 #include"creatures.hpp"
 #include<random>
 
@@ -80,3 +81,4 @@ bool Animal::isBreedingSeason() {
 void Animal::PassBreedPeriod() {
     breed_count += getSpf();
 }
+#endif // !SAVANNAH_ANIMAL_HPP

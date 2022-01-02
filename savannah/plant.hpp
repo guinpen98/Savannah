@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SAVANNAH_PLANT_HPP
+#define SAVANNAH_PLANT_HPP
+
 #include"creatures.hpp"
 #include<vector>
 
@@ -41,3 +43,4 @@ bool Plant::isBreed() {
     }
     return false;
 }
+#endif // !SAVANNAH_PLANT_HPP

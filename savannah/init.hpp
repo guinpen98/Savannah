@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAVANNAH_INIT_HPP
+#define SAVANNAH_INIT_HPP
 #include "DxLib.h"
 #include"creatures.hpp"
 
@@ -65,3 +66,4 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     DeleteGraph(zebra3);
     return DxLib::DxLib_End();
 }
+#endif // !SAVANNAH_IMIT_HPP

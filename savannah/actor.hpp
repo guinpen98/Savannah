@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SAVANNAH_ACTOR_HPP
+#define SAVANNAH_ACTOR_HPP
 #include"init.hpp"
 #include"plant.hpp"
 #include"herbivore.hpp"
@@ -76,3 +77,4 @@ void carnivoreBehavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>
         }
     }
 }
+#endif // !SAVANNAH_ACTOR_HPP
