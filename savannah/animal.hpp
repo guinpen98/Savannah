@@ -7,6 +7,7 @@
 class Animal : public Creatures {
 private:
     double distance = 100.0;
+    bool is_left_direction = true;
 protected:
     Vec2 distination_coord = Vec2(field_width / 2.0, field_height / 2.0);
     double max_satiety = one_year;
@@ -25,6 +26,10 @@ public:
     void setDistination(const Vec2 new_coord);
     //目的地との距離
     void calculateDistinationDistance();
+    //向きの設定
+    void setIsLeftDirection(const double dx);
+    //向きの取得
+    bool getIsLeftDirection()const;
     //生命活動を管理
     void lifeActivity(const double mi_spf, bool& is_die);
     //繁殖期かどうかの判定
@@ -42,6 +47,7 @@ void Animal::move() {
     const Vec2 temp_coord = getCoord();
     const double temp_spf = getSpf();
     const  Vec2 dCoord = Vec2((distination_coord.x - temp_coord.x) / distance*temp_spf*60, (distination_coord.y - temp_coord.y) / distance*temp_spf*60);
+    setIsLeftDirection(dCoord.x);
     setCoord(temp_coord + dCoord);
 }
 bool Animal::isDistination() {
@@ -67,6 +73,13 @@ void Animal::setDistination(const Vec2 new_coord) {
     if (isInTheWindow(new_coord)) distination_coord = new_coord;
     else setRandomDistination();
     calculateDistinationDistance();
+}
+void Animal::setIsLeftDirection(const double dx) {
+    if (dx == 0) return;
+    is_left_direction = (dx < 0);
+}
+bool Animal::getIsLeftDirection()const {
+    return is_left_direction;
 }
 void Animal::lifeActivity(const double mi_spf, bool& is_die) {
     setSpf(mi_spf);

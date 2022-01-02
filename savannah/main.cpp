@@ -24,7 +24,7 @@ void DrawHerbivore(const std::vector<Herbivore>& herbivore,const int camera_x,co
             break;
 
         }
-        DrawRotaGraph((int(h.getCoord().x) - camera_x)* camera_exrate, (int(h.getCoord().y) - camera_y)* camera_exrate, float(ext_rate), 0, zebra_picture, TRUE);
+        DrawRotaGraph((int(h.getCoord().x) - camera_x)* camera_exrate, (int(h.getCoord().y) - camera_y)* camera_exrate, float(ext_rate), 0, zebra_picture, TRUE,h.getIsLeftDirection()?FALSE:TRUE);
     }
 }
 void DrawCarnivore(const std::vector<Carnivore>& carnivore, const int camera_x, const int camera_y,const double camera_exrate) {
@@ -45,7 +45,7 @@ void DrawCarnivore(const std::vector<Carnivore>& carnivore, const int camera_x, 
         default:
             break;
         }
-        DrawRotaGraph((int(c.getCoord().x) - camera_x)* camera_exrate, (int(c.getCoord().y) - camera_y)* camera_exrate, float(ext_rate), 0, lion_picture, TRUE);
+        DrawRotaGraph((int(c.getCoord().x) - camera_x)* camera_exrate, (int(c.getCoord().y) - camera_y)* camera_exrate, float(ext_rate), 0, lion_picture, TRUE,c.getIsLeftDirection() ? FALSE : TRUE);
     }
 }
 void DrawPlant(const std::vector<Plant>& plant,const int camera_x, const int camera_y, const double camera_exrate) {
