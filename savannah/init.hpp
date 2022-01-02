@@ -49,6 +49,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     DxLib::ChangeWindowMode(TRUE);
     DxLib::SetGraphMode(window_width, window_height, 32);
     DxLib::SetMainWindowText("Sample");
+    SetBackgroundColor(222, 192, 106);
     if (DxLib::DxLib_Init() == -1) return -1;
     DxLib::SetDrawScreen(DX_SCREEN_BACK);
     zebra1 = LoadGraph("zebra1.png");
