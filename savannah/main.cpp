@@ -103,8 +103,13 @@ void Main() {
             if (camera_exrate <= 5)
                 camera_exrate += camera_change_exrate;
         if (key_state[KEY_INPUT_Q])
-            if (camera_exrate >= 1)
+            if (camera_exrate >= 1) {
                 camera_exrate -= camera_change_exrate;
+                if (camera_x > field_width - window_width / camera_exrate)
+                    camera_x = field_width - window_width / camera_exrate;
+                if (camera_y > field_height - window_height / camera_exrate)
+                    camera_y = field_height - window_height / camera_exrate;
+            }
         if (key_state[KEY_INPUT_A] || key_state[KEY_INPUT_LEFT])
             if(camera_x>=0) camera_x -= camera_move_distance;
         if (key_state[KEY_INPUT_D] || key_state[KEY_INPUT_RIGHT])
