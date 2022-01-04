@@ -44,7 +44,6 @@ void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivor
     if (isBreedingSeason()) {
         carnivore_state = carnivoreBreedE;
         carnivoreBreed(carnivore, hs);
-        if (isDistination()) setRandomDistination();
     }
     else if (satiety < max_satiety * 3.0 / 4.0) {
         //肉食物にの視界のなかにあって、最も近い草食動物の添え字
@@ -98,7 +97,10 @@ void Carnivore::carnivoreBreed(std::vector<Carnivore>& carnivore, const size_t h
         min_distance = distance(carnivore[i].getCoord());
         s = i;
     }
-    if (s == (std::numeric_limits<size_t>::max)()) return;
+    if (s == (std::numeric_limits<size_t>::max)()) {
+        if (isDistination()) setRandomDistination();
+        return;
+    }
     if (min_distance < 4) {
         born(getCoord(), carnivore, s);
     }

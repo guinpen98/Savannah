@@ -44,7 +44,6 @@ void Herbivore::behavior(std::vector<Herbivore>& herbivore,std::vector<Plant>& p
     if (isBreedingSeason()) {
         herbivore_state = herbivoreBreedE;
         herbivoreBreed(herbivore, hs);
-        if (isDistination()) setRandomDistination();
     }
     else if(satiety< max_satiety * 3.0 / 4.0){
         //草食物にの視界のなかにあって、最も近い植物の添え字
@@ -98,7 +97,10 @@ void Herbivore::herbivoreBreed(std::vector<Herbivore>& herbivore, const size_t h
         min_distance = distance(herbivore[i].getCoord());
         s = i;
     }
-    if (s == (std::numeric_limits<size_t>::max)()) return;
+    if (s == (std::numeric_limits<size_t>::max)()) {
+        if (isDistination()) setRandomDistination();
+        return;
+    }
     if (min_distance < 4) {
         born(getCoord(), herbivore, s);
     }
