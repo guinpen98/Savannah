@@ -1,44 +1,18 @@
 #ifndef SAVANNAH_CREATURES_HPP
 #define SAVANNAH_CREATURES_HPP
 #include"configuration.h"
+#include "vec2.hpp"
 #include <cmath>
-
-//生物の種類
-enum CreaturesE :int {
-	plantE
-	, herbivoreE
-	, carnivoreE
-};
-
-//座標
-struct Vec2 {
-	double x = 0.0, y = 0.0;
-
-	//デフォルトコンストラクタ
-	Vec2() = default;
-
-	//コンストラクタ
-	Vec2(const double ix, const double iy)
-		:x(ix), y(iy) {}
-
-	//Vec2同士の距離の二乗
-	double distance(const Vec2& coord) const {
-		return ((x - coord.x) * (x - coord.x) + (y - coord.y) * (y - coord.y));
-	}
-
-	//Vec2同士の足し算
-	Vec2 operator+(const Vec2& coord) const {
-		return Vec2(x + coord.x, y + coord.y);
-	}
-
-};
 
 //生物クラス
 class Creatures {
 private:
 	//座標
 	Vec2 coord = Vec2(field_width / 2.0, field_height / 2.0);
+
 	double spf = 0.0;
+
+	//年齢
 	double age = 0.0;
 protected:
 	int one_year = 24;
@@ -62,34 +36,8 @@ public:
 	int getOneYear()const;
 	//寿命の値を渡す
 	double getLifespan()const;
+
+	virtual void draw(int camera_x, const int camera_y, const double camera_exrate)const = 0;
 };
 
-//生物クラス実装
-void Creatures::setSpf(const double mi_spf) {
-	spf = mi_spf / 1000.0;
-}
-double Creatures::getSpf() const{
-	return spf;
-}
-void Creatures::getOld() {
-	age += spf;
-}
-double Creatures::getAge()const {
-	return age;
-}
-bool Creatures::isInTheWindow(const Vec2& sub_coord)const {
-	return (sub_coord.x > 0 && sub_coord.x < field_width&& sub_coord.y>0 && sub_coord.y < field_height);
-}
-Vec2 Creatures::getCoord() const{
-	return coord;
-}
-void Creatures::setCoord(const Vec2& new_coord) {
-	coord = Vec2(new_coord);
-}
-int Creatures::getOneYear()const {
-	return one_year;
-}
-double Creatures::getLifespan()const {
-	return lifespan;
-}
 #endif // !SAVANNAH_CREATURES_HPP
