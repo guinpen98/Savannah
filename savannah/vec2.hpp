@@ -1,20 +1,20 @@
-#ifndef SAVANNAH_VEC2_HPP
+ï»¿#ifndef SAVANNAH_VEC2_HPP
 #define SAVANNAH_VEC2_HPP
 
-//À•W
+//åº§æ¨™
 struct Vec2 {
 	double x = 0.0, y = 0.0;
 
-	//ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vec2() = default;
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vec2(const double ix, const double iy);
 
-	//Vec2“¯m‚Ì‹——£‚Ì“ñæ
+	//Vec2åŒå£«ã®è·é›¢ã®äºŒä¹—
 	double distance(const Vec2& coord) const;
 
-	//Vec2“¯m‚Ì‘«‚µZ
+	//Vec2åŒå£«ã®è¶³ã—ç®—
 	Vec2 operator+(const Vec2& coord) const;
 };
 

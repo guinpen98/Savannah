@@ -1,6 +1,6 @@
-#include "plant.hpp"
+ï»¿#include "plant.hpp"
 
-//A•¨ƒNƒ‰ƒXÀ‘•
+//æ¤ç‰©ã‚¯ãƒ©ã‚¹å®Ÿè£…
 void Plant::lifeActivity(const double mi_spf, bool& is_die, bool& is_breed) {
     setSpf(mi_spf);
     getOld();

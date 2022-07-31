@@ -1,16 +1,16 @@
-#include "init.hpp"
+ï»¿#include "init.hpp"
 
 bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
 
 void init() {
-    //”z—ñ‚ÌŠm•Û
+    //é…åˆ—ã®ç¢ºä¿
     std::vector<Herbivore> herbivore;
     std::vector<Plant> plant; plant.reserve(100000);
     std::vector<Carnivore> carnivore;
-    //ŠÔ
+    //æ™‚é–“
     std::chrono::system_clock::time_point  old_time, new_time = std::chrono::system_clock::now();
     double pass_time = 0.0;
-    //ƒ‰ƒ“ƒ_ƒ€
+    //ãƒ©ãƒ³ãƒ€ãƒ 
     constexpr int MIN = 0;
     constexpr int wMAX = field_width;
     constexpr int hMAX = field_height;
@@ -18,20 +18,20 @@ void init() {
     std::mt19937 eng(rd());
     std::uniform_int_distribution<int> wDistr(MIN, wMAX);
     std::uniform_int_distribution<int> hDistr(MIN, hMAX);
-    //Šm—¦
+    //ç¢ºç‡
     std::bernoulli_distribution uid(0.01);
 
-    //‘H“®•¨‚Ì¶¬
+    //è‰é£Ÿå‹•ç‰©ã®ç”Ÿæˆ
     for (int i = 0; i < 50; i++) {
         herbivore.emplace_back();
         herbivore.back().setCoord(Vec2(wDistr(eng), hDistr(eng)));
     }
-    //“÷H“®•¨‚Ì¶¬
+    //è‚‰é£Ÿå‹•ç‰©ã®ç”Ÿæˆ
     for (int i = 0; i < 5; i++) {
         carnivore.emplace_back();
         carnivore.back().setCoord(Vec2(wDistr(eng), hDistr(eng)));
     }
-    //A•¨¶¬
+    //æ¤ç‰©ç”Ÿæˆ
     for (int i = 0; i < 200; i++) {
         plantBorn(plant, Vec2(wDistr(eng), hDistr(eng)));
     }
@@ -65,11 +65,11 @@ void init() {
         if (key_state[KEY_INPUT_S] || key_state[KEY_INPUT_DOWN])
             if (camera_y <= field_height - window_height / camera_exrate) camera_y += camera_move_distance;
         for (int k = 0; k < 1; k++) {
-            //1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌŠÔŒv‘ª
+            //1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®æ™‚é–“è¨ˆæ¸¬
             old_time = new_time;
             new_time = std::chrono::system_clock::now();
 
-            //ƒ‰ƒ“ƒ_ƒ€‚Å‘H“®•¨¶¬
+            //ãƒ©ãƒ³ãƒ€ãƒ ã§è‰é£Ÿå‹•ç‰©ç”Ÿæˆ
             //if (uid(eng)) herbivore.emplace_back();
 
             const double mi_spf = double(std::chrono::duration_cast<std::chrono::milliseconds>(new_time - old_time).count());

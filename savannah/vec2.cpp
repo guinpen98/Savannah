@@ -1,15 +1,15 @@
-#include "vec2.hpp"
+ï»¿#include "vec2.hpp"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Vec2::Vec2(const double ix, const double iy)
 	:x(ix), y(iy) {}
 
-//Vec2“¯m‚Ì‹——£‚Ì“ñæ
+//Vec2åŒå£«ã®è·é›¢ã®äºŒä¹—
 double Vec2::distance(const Vec2& coord) const {
 	return ((x - coord.x) * (x - coord.x) + (y - coord.y) * (y - coord.y));
 }
 
-//Vec2“¯m‚Ì‘«‚µZ
+//Vec2åŒå£«ã®è¶³ã—ç®—
 Vec2 Vec2::operator+(const Vec2& coord) const {
 	return Vec2(x + coord.x, y + coord.y);
 }

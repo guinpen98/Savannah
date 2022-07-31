@@ -1,4 +1,4 @@
-#ifndef SAVANNAH_CREATURES_HPP
+﻿#ifndef SAVANNAH_CREATURES_HPP
 #define SAVANNAH_CREATURES_HPP
 #include"configuration.h"
 #include "vec2.hpp"

@@ -1,4 +1,4 @@
-#include"init.hpp"
+﻿#include"init.hpp"
 #include "property.hpp"
 
 int zebra1 = 0;

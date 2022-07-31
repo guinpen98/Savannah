@@ -1,13 +1,13 @@
-#include "carnivore.hpp"
+ï»¿#include "carnivore.hpp"
 
-//“÷H“®•¨À‘•
+//è‚‰é£Ÿå‹•ç‰©å®Ÿè£…
 void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs) {
     if (isBreedingSeason()) {
         carnivore_state = carnivoreBreedE;
         carnivoreBreed(carnivore, hs);
     }
     else if (satiety < max_satiety * 3.0 / 4.0) {
-        //“÷H•¨‚É‚Ì‹ŠE‚Ì‚È‚©‚É‚ ‚Á‚ÄAÅ‚à‹ß‚¢‘H“®•¨‚Ì“Y‚¦š
+        //è‚‰é£Ÿç‰©ã«ã®è¦–ç•Œã®ãªã‹ã«ã‚ã£ã¦ã€æœ€ã‚‚è¿‘ã„è‰é£Ÿå‹•ç‰©ã®æ·»ãˆå­—
         size_t s = (std::numeric_limits<size_t>::max)();
         bool is_can_eat;
         isCloseToHerbivores(herbivore, s, is_can_eat);
@@ -30,7 +30,7 @@ void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivor
 void Carnivore::isCloseToHerbivores(const std::vector<Herbivore>& herbivore, size_t& s, bool& is_can_eat) {
     double min_distance = 50000.0;
     for (size_t i = 0; i < herbivore.size(); i++) {
-        //Å¬‹——£ˆÈã‚Ì’·‚³‚Ìê‡‚Í•Ô‚·
+        //æœ€å°è·é›¢ä»¥ä¸Šã®é•·ã•ã®å ´åˆã¯è¿”ã™
         if (distance(herbivore[i].getCoord()) >= min_distance) continue;
 
         min_distance = distance(herbivore[i].getCoord());
@@ -50,7 +50,7 @@ void Carnivore::carnivoreBreed(std::vector<Carnivore>& carnivore, const size_t h
     double min_distance = (std::numeric_limits<double>::max)();
     size_t s = (std::numeric_limits<size_t>::max)();
     for (size_t i = 0; i < carnivore.size(); i++) {
-        //“¯‚¶ŒÂ‘Ì‚Ìê‡‚Í•Ô‚·
+        //åŒã˜å€‹ä½“ã®å ´åˆã¯è¿”ã™
         if (i == hs) continue;
 
         if (carnivore[i].carnivore_state != carnivoreBreedE) continue;

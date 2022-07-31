@@ -1,4 +1,4 @@
-#ifndef SAVANNAH_HERNIVORE_HPP
+﻿#ifndef SAVANNAH_HERNIVORE_HPP
 #define SAVANNAH_HERNIVORE_HPP
 #include"animal.hpp"
 #include"plant.hpp"

@@ -1,6 +1,6 @@
-#include "animal.hpp"
+ï»¿#include "animal.hpp"
 
-//“®•¨ƒNƒ‰ƒXŽÀ‘•
+//å‹•ç‰©ã‚¯ãƒ©ã‚¹å®Ÿè£…
 void Animal::move() {
     if (distance == 0.0) {
         setRandomDistination();

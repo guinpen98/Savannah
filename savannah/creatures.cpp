@@ -1,6 +1,6 @@
-#include "creatures.hpp"
+ï»¿#include "creatures.hpp"
 
-//¶•¨ƒNƒ‰ƒXÀ‘•
+//ç”Ÿç‰©ã‚¯ãƒ©ã‚¹å®Ÿè£…
 void Creatures::setSpf(const double mi_spf) {
 	spf = mi_spf / 1000.0;
 }

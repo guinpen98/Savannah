@@ -1,4 +1,4 @@
-#ifndef SAVANNAH_ACTOR_HPP
+﻿#ifndef SAVANNAH_ACTOR_HPP
 #define SAVANNAH_ACTOR_HPP
 #include"plant.hpp"
 #include"herbivore.hpp"

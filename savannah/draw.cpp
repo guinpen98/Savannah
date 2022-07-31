@@ -1,4 +1,4 @@
-#include "draw.hpp"
+﻿#include "draw.hpp"
 
 void Plant::draw(int camera_x, const int camera_y, const double camera_exrate)const {
     const double ext_rate = 0.05 * camera_exrate;

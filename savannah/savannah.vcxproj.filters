@@ -15,69 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\..\savannah\savannah\actor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="animal.cpp">
+    <ClCompile Include="..\..\savannah\savannah\animal.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="creatures.cpp">
+    <ClCompile Include="..\..\savannah\savannah\carnivore.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="actor.cpp">
+    <ClCompile Include="..\..\savannah\savannah\creatures.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="carnivore.cpp">
+    <ClCompile Include="..\..\savannah\savannah\draw.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="herbivore.cpp">
+    <ClCompile Include="..\..\savannah\savannah\herbivore.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="plant.cpp">
+    <ClCompile Include="..\..\savannah\savannah\init.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="init.cpp">
+    <ClCompile Include="..\..\savannah\savannah\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="draw.cpp">
+    <ClCompile Include="..\..\savannah\savannah\plant.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="vec2.cpp">
+    <ClCompile Include="..\..\savannah\savannah\vec2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="init.hpp">
+    <ClInclude Include="..\..\savannah\savannah\actor.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="actor.hpp">
+    <ClInclude Include="..\..\savannah\savannah\animal.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="creatures.hpp">
+    <ClInclude Include="..\..\savannah\savannah\carnivore.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="animal.hpp">
+    <ClInclude Include="..\..\savannah\savannah\creatures.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="plant.hpp">
+    <ClInclude Include="..\..\savannah\savannah\draw.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="herbivore.hpp">
+    <ClInclude Include="..\..\savannah\savannah\herbivore.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="configuration.h">
+    <ClInclude Include="..\..\savannah\savannah\init.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="carnivore.hpp">
+    <ClInclude Include="..\..\savannah\savannah\plant.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="draw.hpp">
+    <ClInclude Include="..\..\savannah\savannah\property.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="property.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="vec2.hpp">
+    <ClInclude Include="..\..\savannah\savannah\vec2.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

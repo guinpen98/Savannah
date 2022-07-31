@@ -1,4 +1,4 @@
-#ifndef SAVANNAH_PROPERTY_HPP
+﻿#ifndef SAVANNAH_PROPERTY_HPP
 #define SAVANNAH_PROPERTY_HPP
 
 extern int zebra1;
