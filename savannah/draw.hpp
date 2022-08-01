@@ -7,4 +7,8 @@
 #include "property.hpp"
 #include <DxLib.h>
 
+namespace Savannah {
+	
+}
+
 #endif // !SAVANNAH_DRAW_HPP

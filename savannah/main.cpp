@@ -25,7 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     lion2 = LoadGraph("lion2.png");
     lion3 = LoadGraph("lion3.png");
     grass1 = LoadGraph("grass.png");
-    init();
+    Savannah::init();
     DeleteGraph(zebra1);
     DeleteGraph(zebra2);
     DeleteGraph(zebra3);

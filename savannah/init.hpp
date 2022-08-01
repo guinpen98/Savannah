@@ -9,6 +9,8 @@
 #include "carnivore.hpp"
 #include "herbivore.hpp"
 
-void init();
+namespace Savannah {
+	void init();
+}
 
 #endif // !SAVANNAH_IMIT_HPP
