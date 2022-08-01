@@ -6,10 +6,10 @@ struct Vec2 {
 	double x = 0.0, y = 0.0;
 
 	//デフォルトコンストラクタ
-	Vec2() = default;
+	explicit Vec2() = default;
 
 	//コンストラクタ
-	Vec2(const double ix, const double iy);
+	explicit Vec2(const double ix, const double iy);
 
 	//Vec2同士の距離の二乗
 	double distance(const Vec2& coord) const;

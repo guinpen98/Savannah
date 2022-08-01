@@ -14,7 +14,7 @@ enum CarnivoreStateE :int {
 class Carnivore : public Animal {
 public:
     CarnivoreStateE carnivore_state = carnivoreWanderE;
-    Carnivore() {
+    explicit Carnivore() {
         lifespan = 20.0;
         one_year = 24;
         breed_period = one_year;

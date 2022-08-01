@@ -10,7 +10,7 @@ private:
     double breed = 0.0;
 public:
     //コンストラクタ
-    Plant() {
+    explicit Plant() {
         one_year = 24;
         lifespan = 5.0;
     }
