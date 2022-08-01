@@ -17,6 +17,20 @@ namespace Savannah {
         plant[plant.size() - 1].setCoord(born_coord);
 
     }
+    void randomPlantBorn(std::vector<Plant>& plant, std::random_device& rd) {
+        std::mt19937 eng(rd());
+        std::uniform_int_distribution<int> wDistr(0, field_width);
+        std::uniform_int_distribution<int> hDistr(0, field_height);
+        Vec2 born_coord = Vec2(wDistr(eng), hDistr(eng));
+        while (!isInTheWindow(born_coord) || plantIsCover(plant, born_coord)) {
+            born_coord = Vec2(wDistr(eng), hDistr(eng));
+        }
+        if (!isInTheWindow(born_coord)) return;
+        if (plantIsCover(plant, born_coord)) return;
+        plant.emplace_back();
+        plant[plant.size() - 1].setCoord(born_coord);
+
+    }
     //植物の繁殖
     void plantBreed(std::vector<Plant>& plant, const size_t i) {
         //植物の座標

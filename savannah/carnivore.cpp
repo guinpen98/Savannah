@@ -32,15 +32,12 @@ namespace Savannah {
         double min_distance = 50000.0;
         for (size_t i = 0; i < herbivore.size(); i++) {
             //最小距離以上の長さの場合は返す
-            if (distance(herbivore[i].getCoord()) >= min_distance) continue;
+            if (getCoord().distanceSquared(herbivore[i].getCoord()) >= min_distance) continue;
 
-            min_distance = distance(herbivore[i].getCoord());
+            min_distance = getCoord().distanceSquared(herbivore[i].getCoord());
             s = i;
         }
         is_can_eat = (min_distance < 50.0);
-    }
-    double Carnivore::distance(const Vec2& herbivore_coord) const {
-        return getCoord().distanceSquared(herbivore_coord);
     }
     void Carnivore::eat(std::vector<Herbivore>& herbivore, const size_t s) {
         herbivore.erase(herbivore.begin() + s);
@@ -55,8 +52,8 @@ namespace Savannah {
             if (i == hs) continue;
 
             if (carnivore[i].carnivore_state != carnivoreBreedE) continue;
-            if (distance(carnivore[i].getCoord()) >= min_distance) continue;
-            min_distance = distance(carnivore[i].getCoord());
+            if (getCoord().distanceSquared(carnivore[i].getCoord()) >= min_distance) continue;
+            min_distance = getCoord().distanceSquared(carnivore[i].getCoord());
             s = i;
         }
         if (s == (std::numeric_limits<size_t>::max)()) {

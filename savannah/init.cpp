@@ -26,15 +26,17 @@ namespace Savannah {
         herbivores.resize(50);
         for (auto& herbivore : herbivores) {
             herbivore.setCoord(Vec2(wDistr(eng), hDistr(eng)));
+            herbivore.setRandomDistination();
         }
         //肉食動物の生成
         carnivores.resize(5);
         for (auto& carnivore : carnivores) {
             carnivore.setCoord(Vec2(wDistr(eng), hDistr(eng)));
+            carnivore.setRandomDistination();
         }
         //植物生成
         for (int i = 0; i < 200; i++) {
-            plantBorn(plant, Vec2(wDistr(eng), hDistr(eng)));
+            randomPlantBorn(plant, rd);
         }
         char key_state[256];
         int camera_x = 0;
@@ -53,9 +55,9 @@ namespace Savannah {
                 if (camera_exrate >= 1) {
                     camera_exrate -= camera_change_exrate;
                     if (camera_x > field_width - window_width / camera_exrate)
-                        camera_x = field_width - window_width / camera_exrate;
+                        camera_x = field_width - int(window_width / camera_exrate);
                     if (camera_y > field_height - window_height / camera_exrate)
-                        camera_y = field_height - window_height / camera_exrate;
+                        camera_y = field_height - int(window_height / camera_exrate);
                 }
             if (key_state[KEY_INPUT_A] || key_state[KEY_INPUT_LEFT])
                 if (camera_x >= 0) camera_x -= camera_move_distance;

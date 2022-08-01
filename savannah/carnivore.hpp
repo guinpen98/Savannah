@@ -23,8 +23,6 @@ namespace Savannah {
         }
         //行動
         void behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs);
-        //距離を計測
-        double distance(const Vec2& herbivore_coord)const;
 
         //食事
         void eat(std::vector<Herbivore>& herbivore, const size_t s);
