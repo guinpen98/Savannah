@@ -4,7 +4,7 @@ namespace Savannah {
     //草食動物実装
     void Herbivore::behavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& plant, const size_t hs) {
         if (isBreedingSeason()) {
-            herbivore_state = herbivoreBreedE;
+            herbivore_state = HerbivoreStateE::herbivoreBreedE;
             herbivoreBreed(herbivore, hs);
         }
         else if (satiety < max_satiety * 3.0 / 4.0) {
@@ -13,17 +13,17 @@ namespace Savannah {
             bool is_can_eat;
             isCloseToPlants(plant, s, is_can_eat);
             if (s != (std::numeric_limits<size_t>::max)()) {
-                herbivore_state = herbivoreForageE;
+                herbivore_state = HerbivoreStateE::herbivoreForageE;
                 setDistination(plant[s].getCoord());
                 if (is_can_eat) eat(plant, s);
             }
             else {
-                herbivore_state = herbivoreWanderE;
+                herbivore_state = HerbivoreStateE::herbivoreWanderE;
                 if (isDistination()) setRandomDistination();
             }
         }
         else {
-            herbivore_state = herbivoreWanderE;
+            herbivore_state = HerbivoreStateE::herbivoreWanderE;
             if (isDistination()) setRandomDistination();
         }
         move();
@@ -51,7 +51,7 @@ namespace Savannah {
             //同じ個体の場合は返す
             if (i == hs) continue;
 
-            if (herbivore[i].herbivore_state != herbivoreBreedE) continue;
+            if (herbivore[i].herbivore_state != HerbivoreStateE::herbivoreBreedE) continue;
             if (getCoord().distanceSquared(herbivore[i].getCoord()) >= min_distance) continue;
             min_distance = getCoord().distanceSquared(herbivore[i].getCoord());
             s = i;
@@ -71,15 +71,15 @@ namespace Savannah {
         herbivore.emplace_back();
         herbivore.back().setCoord(born_coord);
         satiety -= one_year / 2.0;
-        herbivore_state = herbivoreWanderE;
+        herbivore_state = HerbivoreStateE::herbivoreWanderE;
         breed_count = 0.0;
         herbivore[s].satiety -= one_year / 2.0;
-        herbivore[s].herbivore_state = herbivoreWanderE;
+        herbivore[s].herbivore_state = HerbivoreStateE::herbivoreWanderE;
         herbivore[s].breed_count = 0.0;
 
     }
     int Herbivore::getHerbivoreState() {
-        return herbivore_state;
+        return (int)herbivore_state;
     }
     void Herbivore::setHerbivoreState(enum HerbivoreStateE new_state) {
         herbivore_state = new_state;

@@ -13,19 +13,19 @@ namespace Savannah {
         int lion_picture = lion1;
         switch (carnivore_state)
         {
-        case carnivoreWanderE:
+        case CarnivoreStateE::carnivoreWanderE:
             lion_picture = lion1;
             break;
-        case carnivoreForageE:
+        case CarnivoreStateE::carnivoreForageE:
             lion_picture = lion2;
             break;
-        case carnivoreBreedE:
+        case CarnivoreStateE::carnivoreBreedE:
             lion_picture = lion3;
             break;
         default:
             break;
         }
-        DrawRotaGraph((int(getCoord().x) - camera_x) * camera_exrate, (int(getCoord().y) - camera_y) * camera_exrate, float(ext_rate), 0, lion_picture, TRUE, getIsLeftDirection() ? FALSE : TRUE);
+        DrawRotaGraph(int((getCoord().x - camera_x) * camera_exrate), int((getCoord().y - camera_y) * camera_exrate), float(ext_rate), 0, lion_picture, TRUE, getIsLeftDirection() ? FALSE : TRUE);
     }
 
     void Herbivore::draw(int camera_x, const int camera_y, const double camera_exrate)const {
@@ -33,19 +33,19 @@ namespace Savannah {
         int zebra_picture = zebra1;
         switch (herbivore_state)
         {
-        case herbivoreWanderE:
+        case HerbivoreStateE::herbivoreWanderE:
             zebra_picture = zebra1;
             break;
-        case herbivoreForageE:
+        case HerbivoreStateE::herbivoreForageE:
             zebra_picture = zebra2;
             break;
-        case herbivoreBreedE:
+        case HerbivoreStateE::herbivoreBreedE:
             zebra_picture = zebra3;
             break;
         default:
             break;
 
         }
-        DrawRotaGraph((int(getCoord().x) - camera_x) * camera_exrate, (int(getCoord().y) - camera_y) * camera_exrate, float(ext_rate), 0, zebra_picture, TRUE, getIsLeftDirection() ? FALSE : TRUE);
+        DrawRotaGraph(int((getCoord().x - camera_x) * camera_exrate), int((getCoord().y - camera_y) * camera_exrate), float(ext_rate), 0, zebra_picture, TRUE, getIsLeftDirection() ? FALSE : TRUE);
     }
 }

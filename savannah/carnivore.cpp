@@ -4,7 +4,7 @@ namespace Savannah {
     //肉食動物実装
     void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs) {
         if (isBreedingSeason()) {
-            carnivore_state = carnivoreBreedE;
+            carnivore_state = CarnivoreStateE::carnivoreBreedE;
             carnivoreBreed(carnivore, hs);
         }
         else if (satiety < max_satiety * 3.0 / 4.0) {
@@ -13,17 +13,17 @@ namespace Savannah {
             bool is_can_eat;
             isCloseToHerbivores(herbivore, s, is_can_eat);
             if (s != (std::numeric_limits<size_t>::max)()) {
-                carnivore_state = carnivoreForageE;
+                carnivore_state = CarnivoreStateE::carnivoreForageE;
                 setDistination(herbivore[s].getCoord());
                 if (is_can_eat) eat(herbivore, s);
             }
             else {
-                carnivore_state = carnivoreWanderE;
+                carnivore_state = CarnivoreStateE::carnivoreWanderE;
                 if (isDistination()) setRandomDistination();
             }
         }
         else {
-            carnivore_state = carnivoreWanderE;
+            carnivore_state = CarnivoreStateE::carnivoreWanderE;
             if (isDistination()) setRandomDistination();
         }
         move();
@@ -51,7 +51,7 @@ namespace Savannah {
             //同じ個体の場合は返す
             if (i == hs) continue;
 
-            if (carnivore[i].carnivore_state != carnivoreBreedE) continue;
+            if (carnivore[i].carnivore_state != CarnivoreStateE::carnivoreBreedE) continue;
             if (getCoord().distanceSquared(carnivore[i].getCoord()) >= min_distance) continue;
             min_distance = getCoord().distanceSquared(carnivore[i].getCoord());
             s = i;
@@ -69,15 +69,15 @@ namespace Savannah {
         carnivore.emplace_back();
         carnivore.back().setCoord(born_coord);
         satiety -= one_year / 4.0;
-        carnivore_state = carnivoreWanderE;
+        carnivore_state = CarnivoreStateE::carnivoreWanderE;
         breed_count = 0.0;
         carnivore[s].satiety -= one_year / 4.0;
-        carnivore[s].carnivore_state = carnivoreWanderE;
+        carnivore[s].carnivore_state = CarnivoreStateE::carnivoreWanderE;
         carnivore[s].breed_count = 0.0;
 
     }
     int Carnivore::getCarnivoreState() {
-        return carnivore_state;
+        return (int)carnivore_state;
     }
     void Carnivore::setCarnivoreState(enum CarnivoreStateE new_state) {
         carnivore_state = new_state;
