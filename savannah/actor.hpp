@@ -1,9 +1,6 @@
 ﻿#ifndef SAVANNAH_ACTOR_HPP
 #define SAVANNAH_ACTOR_HPP
-#include"plant.hpp"
-#include"herbivore.hpp"
 #include"carnivore.hpp"
-#include<vector>
 
 namespace Savannah {
 	bool isInTheWindow(const Vec2& sub_coord);
