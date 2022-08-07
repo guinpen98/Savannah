@@ -7,11 +7,10 @@ namespace Savannah {
         setOld();
         breed += getSpf();
         is_breed = isBreed();
-        is_die = (getAge() > one_year * lifespan);
         Vec2 temp_coord = getCoord();
-        is_die = (temp_coord.x<0 || temp_coord.x>field_width || temp_coord.y<0 || temp_coord.y>field_height);
+        is_die = (temp_coord.x < 0 || temp_coord.x > field_width || temp_coord.y < 0 || temp_coord.y > field_height || getAge() > one_year * lifespan);
     }
-    bool Plant::isCover(const Vec2& sub_coord) {
+    bool Plant::isCover(const Vec2& sub_coord)const {
         return (getCoord().distanceSquared(sub_coord) < 100.0);
     }
     bool Plant::isBreed() {
