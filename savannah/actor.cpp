@@ -1,4 +1,5 @@
 ﻿#include "actor.hpp"
+#include "rand.h"
 
 namespace Savannah {
     bool isInTheWindow(const Vec2& sub_coord) {
@@ -17,13 +18,10 @@ namespace Savannah {
         plant[plant.size() - 1].setCoord(born_coord);
 
     }
-    void randomPlantBorn(std::vector<Plant>& plant, std::random_device& rd) {
-        std::mt19937 eng(rd());
-        std::uniform_int_distribution<int> wDistr(0, field_width);
-        std::uniform_int_distribution<int> hDistr(0, field_height);
-        Vec2 born_coord = Vec2(wDistr(eng), hDistr(eng));
+    void randomPlantBorn(std::vector<Plant>& plant, class Rand& rd) {
+        Vec2 born_coord = rd.randDist();
         while (!isInTheWindow(born_coord) || plantIsCover(plant, born_coord)) {
-            born_coord = Vec2(wDistr(eng), hDistr(eng));
+            born_coord = rd.randDist();
         }
         if (!isInTheWindow(born_coord)) return;
         if (plantIsCover(plant, born_coord)) return;

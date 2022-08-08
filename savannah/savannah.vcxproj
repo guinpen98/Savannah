@@ -29,6 +29,7 @@
     <ClCompile Include="..\..\savannah\savannah\main.cpp" />
     <ClCompile Include="..\..\savannah\savannah\plant.cpp" />
     <ClCompile Include="..\..\savannah\savannah\vec2.cpp" />
+    <ClCompile Include="rand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\savannah\savannah\actor.hpp" />
@@ -39,8 +40,10 @@
     <ClInclude Include="..\..\savannah\savannah\herbivore.hpp" />
     <ClInclude Include="..\..\savannah\savannah\init.hpp" />
     <ClInclude Include="..\..\savannah\savannah\plant.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\property.hpp" />
+    <ClInclude Include="graph.h" />
     <ClInclude Include="..\..\savannah\savannah\vec2.hpp" />
+    <ClInclude Include="configuration.h" />
+    <ClInclude Include="rand.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

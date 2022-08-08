@@ -1,5 +1,5 @@
-﻿#ifndef SAVANNAH_PROPERTY_HPP
-#define SAVANNAH_PROPERTY_HPP
+﻿#ifndef SAVANNAH_GRAPH_H
+#define SAVANNAH_GRAPH_H
 
 namespace Savannah {
 	extern int zebra1;
@@ -10,4 +10,4 @@ namespace Savannah {
 	extern int lion3;
 	extern int grass1;
 }
-#endif // !SAVANNAH_PROPERTY_HPP
+#endif // !SAVANNAH_GRAPH_H

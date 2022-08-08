@@ -1,5 +1,5 @@
 ﻿#include"init.hpp"
-#include "property.hpp"
+#include "graph.h"
 
 namespace Savannah {
     int zebra1 = 0;

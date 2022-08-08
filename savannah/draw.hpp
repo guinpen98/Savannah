@@ -4,7 +4,7 @@
 #include "herbivore.hpp"
 #include "carnivore.hpp"
 #include "plant.hpp"
-#include "property.hpp"
+#include "graph.h"
 #include <DxLib.h>
 
 namespace Savannah {

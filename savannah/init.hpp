@@ -1,9 +1,8 @@
 ﻿#ifndef SAVANNAH_INIT_HPP
 #define SAVANNAH_INIT_HPP
 #include "DxLib.h"
-#include"actor.hpp"
-#include<random>
-#include<vector>
+#include "actor.hpp"
+#include <vector>
 #include <chrono>
 #include "plant.hpp"
 #include "carnivore.hpp"

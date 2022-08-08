@@ -1,4 +1,5 @@
 ﻿#include "init.hpp"
+#include "rand.h"
 
 namespace Savannah {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
@@ -11,27 +12,18 @@ namespace Savannah {
         //時間
         std::chrono::system_clock::time_point  old_time, new_time = std::chrono::system_clock::now();
         double pass_time = 0.0;
-        //ランダム
-        constexpr int MIN = 0;
-        constexpr int wMAX = field_width;
-        constexpr int hMAX = field_height;
-        std::random_device rd;
-        std::mt19937 eng(rd());
-        std::uniform_int_distribution<int> wDistr(MIN, wMAX);
-        std::uniform_int_distribution<int> hDistr(MIN, hMAX);
-        //確率
-        std::bernoulli_distribution uid(0.01);
+        Rand rd;
 
         //草食動物の生成
         herbivores.resize(50);
         for (auto& herbivore : herbivores) {
-            herbivore.setCoord(Vec2(wDistr(eng), hDistr(eng)));
+            herbivore.setCoord(rd.randDist());
             herbivore.setRandomDistination();
         }
         //肉食動物の生成
         carnivores.resize(5);
         for (auto& carnivore : carnivores) {
-            carnivore.setCoord(Vec2(wDistr(eng), hDistr(eng)));
+            carnivore.setCoord(rd.randDist());
             carnivore.setRandomDistination();
         }
         //植物生成
