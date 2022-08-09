@@ -1,4 +1,5 @@
 ﻿#include "creatures.hpp"
+#include "rand.h"
 
 namespace Savannah {
 	//生物クラス実装
@@ -23,10 +24,15 @@ namespace Savannah {
 	void Creatures::setCoord(const Vec2& new_coord) {
 		coord = Vec2(new_coord);
 	}
+	Rand* Creatures::getRd() const
+	{
+		return rd;
+	}
 	int Creatures::getOneYear()const {
 		return one_year;
 	}
 	double Creatures::getLifespan()const {
 		return lifespan;
 	}
+	Creatures::Creatures(Rand* new_rd):rd(new_rd) {}
 }

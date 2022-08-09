@@ -1,5 +1,6 @@
 ﻿#include "actor.hpp"
 #include "rand.h"
+#include "creatures.hpp"
 
 namespace Savannah {
     bool isInTheWindow(const Vec2& sub_coord) {
@@ -11,22 +12,22 @@ namespace Savannah {
         }
         return false;
     }
-    void plantBorn(std::vector<Plant>& plant, const Vec2& born_coord) {
+    void plantBorn(std::vector<Plant>& plants, const Vec2& born_coord) {
         if (!isInTheWindow(born_coord)) return;
-        if (plantIsCover(plant, born_coord)) return;
-        plant.emplace_back();
-        plant[plant.size() - 1].setCoord(born_coord);
+        if (plantIsCover(plants, born_coord)) return;
+        plants.emplace_back(plants[0].getRd());
+        plants[plants.size() - 1].setCoord(born_coord);
 
     }
-    void randomPlantBorn(std::vector<Plant>& plant, class Rand& rd) {
+    void randomPlantBorn(std::vector<Plant>& plants, class Rand& rd) {
         Vec2 born_coord = rd.randDist();
-        while (!isInTheWindow(born_coord) || plantIsCover(plant, born_coord)) {
+        while (!isInTheWindow(born_coord) || plantIsCover(plants, born_coord)) {
             born_coord = rd.randDist();
         }
         if (!isInTheWindow(born_coord)) return;
-        if (plantIsCover(plant, born_coord)) return;
-        plant.emplace_back();
-        plant[plant.size() - 1].setCoord(born_coord);
+        if (plantIsCover(plants, born_coord)) return;
+        plants.emplace_back(&rd);
+        plants[plants.size() - 1].setCoord(born_coord);
 
     }
     //植物の繁殖

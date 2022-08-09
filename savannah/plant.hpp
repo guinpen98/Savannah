@@ -13,10 +13,7 @@ namespace Savannah {
         bool isBreed();
     public:
         //コンストラクタ
-        explicit Plant() {
-            one_year = 24;
-            lifespan = 5.0;
-        }
+        explicit Plant(class Rand*);
         //生命活動
         void lifeActivity(const double mi_spf, bool& is_die, bool& is_breed);
         //他の植物と被っているかの判定

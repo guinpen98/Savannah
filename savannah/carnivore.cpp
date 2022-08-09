@@ -1,6 +1,13 @@
 ﻿#include "carnivore.hpp"
 
 namespace Savannah {
+    Carnivore::Carnivore(Rand* rd):Animal(rd)
+    {
+        lifespan = 20.0;
+        one_year = 24;
+        breed_period = one_year;
+        breed_age = 2.0 * one_year;
+    }
     //肉食動物実装
     void Carnivore::behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs) {
         if (isBreedingSeason()) {
@@ -65,15 +72,15 @@ namespace Savannah {
         }
         else setDistination(carnivore[s].getCoord());
     }
-    void Carnivore::born(const Vec2& born_coord, std::vector<Carnivore>& carnivore, const size_t s) {
-        carnivore.emplace_back();
-        carnivore.back().setCoord(born_coord);
+    void Carnivore::born(const Vec2& born_coord, std::vector<Carnivore>& carnivores, const size_t s) {
+        carnivores.emplace_back(carnivores[0].getRd());
+        carnivores.back().setCoord(born_coord);
         satiety -= one_year / 4.0;
         carnivore_state = CarnivoreStateE::carnivoreWanderE;
         breed_count = 0.0;
-        carnivore[s].satiety -= one_year / 4.0;
-        carnivore[s].carnivore_state = CarnivoreStateE::carnivoreWanderE;
-        carnivore[s].breed_count = 0.0;
+        carnivores[s].satiety -= one_year / 4.0;
+        carnivores[s].carnivore_state = CarnivoreStateE::carnivoreWanderE;
+        carnivores[s].breed_count = 0.0;
 
     }
     int Carnivore::getCarnivoreState() {

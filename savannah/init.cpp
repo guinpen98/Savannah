@@ -15,16 +15,16 @@ namespace Savannah {
         Rand rd;
 
         //草食動物の生成
-        herbivores.resize(50);
-        for (auto& herbivore : herbivores) {
-            herbivore.setCoord(rd.randDist());
-            herbivore.setRandomDistination();
+        for (int i = 0; i < 50;++i) {
+            herbivores.emplace_back(&rd);
+            herbivores.back().setCoord(rd.randDist());
+            herbivores.back().setRandomDistination();
         }
         //肉食動物の生成
-        carnivores.resize(5);
-        for (auto& carnivore : carnivores) {
-            carnivore.setCoord(rd.randDist());
-            carnivore.setRandomDistination();
+        for (int i = 0; i < 5;++i) {
+            carnivores.emplace_back(&rd);
+            carnivores.back().setCoord(rd.randDist());
+            carnivores.back().setRandomDistination();
         }
         //植物生成
         for (int i = 0; i < 200; i++) {

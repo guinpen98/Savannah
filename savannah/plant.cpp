@@ -1,6 +1,11 @@
 ﻿#include "plant.hpp"
 
 namespace Savannah {
+    Plant::Plant(Rand* rd):Creatures(rd)
+    {
+        one_year = 24;
+        lifespan = 5.0;
+    }
     //植物クラス実装
     void Plant::lifeActivity(const double mi_spf, bool& is_die, bool& is_breed) {
         setSpf(mi_spf);

@@ -54,6 +54,9 @@ namespace Savannah {
     bool Animal::isBreedingSeason() {
         return (satiety > max_satiety * 3.0 / 4.0 && getAge() > breed_age && breed_count > breed_period);
     }
+    Animal::Animal(Rand* rd):Creatures(rd)
+    {
+    }
     void Animal::passBreedPeriod() {
         breed_count += getSpf();
     }

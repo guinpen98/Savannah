@@ -65,17 +65,17 @@ namespace Savannah {
         }
         else setDistination(herbivore[s].getCoord());
     }
-    void Herbivore::born(const Vec2& born_coord, std::vector<Herbivore>& herbivore, const size_t s) {
+    void Herbivore::born(const Vec2& born_coord, std::vector<Herbivore>& herbivores, const size_t s) {
         if (!isBreedingSeason()) return;
-        if (!herbivore[s].isBreedingSeason()) return;
-        herbivore.emplace_back();
-        herbivore.back().setCoord(born_coord);
+        if (!herbivores[s].isBreedingSeason()) return;
+        herbivores.emplace_back(herbivores[0].getRd());
+        herbivores.back().setCoord(born_coord);
         satiety -= one_year / 2.0;
         herbivore_state = HerbivoreStateE::herbivoreWanderE;
         breed_count = 0.0;
-        herbivore[s].satiety -= one_year / 2.0;
-        herbivore[s].herbivore_state = HerbivoreStateE::herbivoreWanderE;
-        herbivore[s].breed_count = 0.0;
+        herbivores[s].satiety -= one_year / 2.0;
+        herbivores[s].herbivore_state = HerbivoreStateE::herbivoreWanderE;
+        herbivores[s].breed_count = 0.0;
 
     }
     int Herbivore::getHerbivoreState() {
@@ -83,5 +83,11 @@ namespace Savannah {
     }
     void Herbivore::setHerbivoreState(enum HerbivoreStateE new_state) {
         herbivore_state = new_state;
+    }
+    Herbivore::Herbivore(Rand* rd):Animal(rd)
+    {
+        lifespan = 20.0;
+        one_year = 24;
+        breed_age = one_year * 2.0;
     }
 }

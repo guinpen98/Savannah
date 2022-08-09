@@ -1,6 +1,6 @@
 ﻿#ifndef SAVANNAH_CARNIVORE_HPP
 #define SAVANNAH_CARNIVORE_HPP
-#include"herbivore.hpp"
+#include "herbivore.hpp"
 
 namespace Savannah {
     enum class CarnivoreStateE :int {
@@ -28,12 +28,7 @@ namespace Savannah {
 
     public:
         CarnivoreStateE carnivore_state = CarnivoreStateE::carnivoreWanderE;
-        explicit Carnivore() {
-            lifespan = 20.0;
-            one_year = 24;
-            breed_period = one_year;
-            breed_age = 2.0 * one_year;
-        }
+        explicit Carnivore(Rand*);
         //行動
         void behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs);
         //描画

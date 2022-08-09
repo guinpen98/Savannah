@@ -29,11 +29,7 @@ namespace Savannah {
         void setHerbivoreState(enum HerbivoreStateE new_state);
     public:
         HerbivoreStateE herbivore_state = HerbivoreStateE::herbivoreWanderE;
-        explicit Herbivore() {
-            lifespan = 20.0;
-            one_year = 24;
-            breed_age = one_year * 2.0;
-        }
+        explicit Herbivore(Rand*);
 
         //行動
         void behavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& plant, const size_t i);

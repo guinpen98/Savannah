@@ -15,6 +15,7 @@ namespace Savannah {
 
 		//年齢
 		double age = 0.0;
+		class Rand* rd;
 	protected:
 		int one_year = 24;
 		double lifespan = 5.0;
@@ -34,10 +35,12 @@ namespace Savannah {
 		//寿命の値を渡す
 		double getLifespan()const;
 	public:
+		Creatures(Rand*);
 		//座標を渡す
 		Vec2 getCoord()const;
 		//座標の更新
 		void setCoord(const Vec2& new_coord);
+		Rand* getRd()const;
 
 		virtual void draw(int camera_x, const int camera_y, const double camera_exrate)const = 0;
 	};

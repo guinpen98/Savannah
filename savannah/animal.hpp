@@ -35,6 +35,7 @@ namespace Savannah {
         //繁殖期かどうかの判定
         bool isBreedingSeason();
     public:
+        Animal(Rand*);
         //目的地をランダムに設定
         void setRandomDistination();
         //生命活動を管理
