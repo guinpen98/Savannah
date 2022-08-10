@@ -1,5 +1,7 @@
 ﻿#include "creatures.hpp"
+#include"configuration.h"
 #include "rand.h"
+#include <cmath>
 
 namespace Savannah {
 	//生物クラス実装
@@ -34,5 +36,8 @@ namespace Savannah {
 	double Creatures::getLifespan()const {
 		return lifespan;
 	}
-	Creatures::Creatures(Rand* new_rd):rd(new_rd) {}
+	Creatures::Creatures(Rand* new_rd):rd(new_rd)
+	{
+		coord = rd->randDist();
+	}
 }

@@ -1,15 +1,13 @@
 ﻿#ifndef SAVANNAH_CREATURES_HPP
 #define SAVANNAH_CREATURES_HPP
-#include"configuration.h"
 #include "vec2.hpp"
-#include <cmath>
 
 namespace Savannah {
 	//生物クラス
 	class Creatures {
 	private:
 		//座標
-		Vec2 coord = Vec2(field_width / 2.0, field_height / 2.0);
+		Vec2 coord;
 
 		double spf = 0.0;
 

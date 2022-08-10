@@ -49,6 +49,7 @@ namespace Savannah {
     }
     Animal::Animal(Rand* rd):Creatures(rd)
     {
+        distination_coord = rd->randDist();
     }
     void Animal::passBreedPeriod() {
         breed_count += getSpf();

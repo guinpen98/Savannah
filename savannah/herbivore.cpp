@@ -1,4 +1,5 @@
 ﻿#include "herbivore.hpp"
+#include <limits>
 
 namespace Savannah {
     //草食動物実装

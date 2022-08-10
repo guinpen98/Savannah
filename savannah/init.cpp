@@ -1,5 +1,8 @@
 ﻿#include "init.hpp"
 #include "rand.h"
+#include "actor.hpp"
+#include <chrono>
+#include "carnivore.hpp"
 
 namespace Savannah {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
@@ -17,14 +20,10 @@ namespace Savannah {
         //草食動物の生成
         for (int i = 0; i < 50;++i) {
             herbivores.emplace_back(&rd);
-            herbivores.back().setCoord(rd.randDist());
-            herbivores.back().setRandomDistination();
         }
         //肉食動物の生成
         for (int i = 0; i < 5;++i) {
             carnivores.emplace_back(&rd);
-            carnivores.back().setCoord(rd.randDist());
-            carnivores.back().setRandomDistination();
         }
         //植物生成
         for (int i = 0; i < 200; i++) {

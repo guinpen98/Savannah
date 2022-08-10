@@ -1,4 +1,5 @@
 ﻿#include "plant.hpp"
+#include "configuration.h"
 
 namespace Savannah {
     Plant::Plant(Rand* rd):Creatures(rd)

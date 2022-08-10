@@ -62,9 +62,6 @@
     <ClInclude Include="..\..\savannah\savannah\creatures.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\draw.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\savannah\savannah\herbivore.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

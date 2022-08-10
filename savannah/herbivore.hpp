@@ -2,7 +2,7 @@
 #define SAVANNAH_HERNIVORE_HPP
 #include"animal.hpp"
 #include"plant.hpp"
-#include <limits>
+#include <vector>
 
 namespace Savannah {
     enum class HerbivoreStateE :int {

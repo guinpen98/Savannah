@@ -2,7 +2,6 @@
 #define SAVANNAH_PLANT_HPP
 
 #include"creatures.hpp"
-#include<vector>
 
 namespace Savannah {
     //植物クラス

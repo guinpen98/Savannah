@@ -1,4 +1,6 @@
-﻿#include "draw.hpp"
+﻿#include "carnivore.hpp"
+#include "graph.h"
+#include <DxLib.h>
 
 namespace Savannah {
     void Plant::draw(int camera_x, const int camera_y, const double camera_exrate)const {

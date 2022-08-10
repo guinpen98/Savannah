@@ -1,5 +1,6 @@
 ﻿#include"init.hpp"
 #include "graph.h"
+#include"configuration.h"
 
 namespace Savannah {
     int zebra1 = 0;

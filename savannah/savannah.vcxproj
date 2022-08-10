@@ -36,7 +36,6 @@
     <ClInclude Include="..\..\savannah\savannah\animal.hpp" />
     <ClInclude Include="..\..\savannah\savannah\carnivore.hpp" />
     <ClInclude Include="..\..\savannah\savannah\creatures.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\draw.hpp" />
     <ClInclude Include="..\..\savannah\savannah\herbivore.hpp" />
     <ClInclude Include="..\..\savannah\savannah\init.hpp" />
     <ClInclude Include="..\..\savannah\savannah\plant.hpp" />

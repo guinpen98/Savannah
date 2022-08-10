@@ -16,7 +16,7 @@ namespace Savannah {
         //繁殖からの時間経過
         void passBreedPeriod();
     protected:
-        Vec2 distination_coord = Vec2(field_width / 2.0, field_height / 2.0);
+        Vec2 distination_coord;
         double max_satiety = one_year;
         double satiety = max_satiety;
         double breed_count = 0.0;
