@@ -15,10 +15,10 @@ namespace Savannah {
 
 		//年齢
 		double age = 0.0;
-		class Rand* rd;
 	protected:
 		int one_year = 24;
 		double lifespan = 5.0;
+		class Rand* rd;
 
 		//計測した1フレームあたりの秒数を設定する
 		void setSpf(const double mi_spf);

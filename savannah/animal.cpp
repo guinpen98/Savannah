@@ -1,4 +1,5 @@
 ﻿#include "animal.hpp"
+#include "rand.h"
 
 namespace Savannah {
     //動物クラス実装
@@ -21,15 +22,7 @@ namespace Savannah {
         distance = std::sqrt(getCoord().distanceSquared(distination_coord));
     }
     void Animal::setRandomDistination() {
-        constexpr int MIN = 0;
-        constexpr int wMAX = field_width;
-        constexpr int hMAX = field_height;
-        std::random_device rd;
-        std::mt19937 eng(rd());
-        std::uniform_int_distribution<int> wDistr(MIN, wMAX);
-        std::uniform_int_distribution<int> hDistr(MIN, hMAX);
-        distination_coord.x = wDistr(eng);
-        distination_coord.y = hDistr(eng);
+        distination_coord = rd->randDist();
         calculateDistinationDistance();
     }
     void Animal::setDistination(const Vec2 new_coord) {

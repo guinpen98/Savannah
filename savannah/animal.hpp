@@ -1,7 +1,6 @@
 ﻿#ifndef SAVANNAH_ANIMAL_HPP
 #define SAVANNAH_ANIMAL_HPP
 #include"creatures.hpp"
-#include<random>
 
 namespace Savannah {
     //動物クラス
