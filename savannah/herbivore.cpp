@@ -1,4 +1,4 @@
-﻿#include "herbivore.hpp"
+﻿#include "herbivore.h"
 #include <limits>
 
 namespace Savannah {

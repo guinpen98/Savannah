@@ -1,4 +1,4 @@
-﻿#include"init.hpp"
+﻿#include"init.h"
 #include "graph.h"
 #include"configuration.h"
 

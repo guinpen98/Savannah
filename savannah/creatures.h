@@ -1,6 +1,6 @@
-﻿#ifndef SAVANNAH_CREATURES_HPP
-#define SAVANNAH_CREATURES_HPP
-#include "vec2.hpp"
+﻿#ifndef SAVANNAH_CREATURES_H
+#define SAVANNAH_CREATURES_H
+#include "vec2.h"
 
 namespace Savannah {
 	//生物クラス
@@ -44,4 +44,4 @@ namespace Savannah {
 	};
 }
 
-#endif // !SAVANNAH_CREATURES_HPP
+#endif // !SAVANNAH_CREATURES_H

@@ -1,4 +1,4 @@
-﻿#include "carnivore.hpp"
+﻿#include "carnivore.h"
 
 namespace Savannah {
     Carnivore::Carnivore(Rand* rd):Animal(rd)

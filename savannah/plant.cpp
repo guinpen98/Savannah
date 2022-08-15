@@ -1,4 +1,4 @@
-﻿#include "plant.hpp"
+﻿#include "plant.h"
 #include "configuration.h"
 
 namespace Savannah {

@@ -1,6 +1,6 @@
-﻿#include "actor.hpp"
+﻿#include "actor.h"
 #include "rand.h"
-#include "creatures.hpp"
+#include "creatures.h"
 
 namespace Savannah {
     bool isInTheWindow(const Vec2& sub_coord) {

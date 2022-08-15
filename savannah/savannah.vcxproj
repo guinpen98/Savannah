@@ -32,15 +32,15 @@
     <ClCompile Include="rand.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\savannah\savannah\actor.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\animal.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\carnivore.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\creatures.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\herbivore.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\init.hpp" />
-    <ClInclude Include="..\..\savannah\savannah\plant.hpp" />
+    <ClInclude Include="actor.h" />
+    <ClInclude Include="animal.h" />
+    <ClInclude Include="carnivore.h" />
+    <ClInclude Include="creatures.h" />
+    <ClInclude Include="herbivore.h" />
+    <ClInclude Include="init.h" />
+    <ClInclude Include="plant.h" />
     <ClInclude Include="graph.h" />
-    <ClInclude Include="..\..\savannah\savannah\vec2.hpp" />
+    <ClInclude Include="vec2.h" />
     <ClInclude Include="configuration.h" />
     <ClInclude Include="rand.h" />
   </ItemGroup>

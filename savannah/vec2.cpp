@@ -1,4 +1,4 @@
-﻿#include "vec2.hpp"
+﻿#include "vec2.h"
 
 namespace Savannah {
 	//コンストラクタ

@@ -1,7 +1,7 @@
-﻿#ifndef SAVANNAH_HERNIVORE_HPP
-#define SAVANNAH_HERNIVORE_HPP
-#include"animal.hpp"
-#include"plant.hpp"
+﻿#ifndef SAVANNAH_HERNIVORE_H
+#define SAVANNAH_HERNIVORE_H
+#include"animal.h"
+#include"plant.h"
 #include <vector>
 
 namespace Savannah {
@@ -38,4 +38,4 @@ namespace Savannah {
     };
 }
 
-#endif // !SAVANNAH_HERNIVORE_HPP
+#endif // !SAVANNAH_HERNIVORE_H

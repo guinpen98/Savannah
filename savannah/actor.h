@@ -1,6 +1,6 @@
-﻿#ifndef SAVANNAH_ACTOR_HPP
-#define SAVANNAH_ACTOR_HPP
-#include"carnivore.hpp"
+﻿#ifndef SAVANNAH_ACTOR_H
+#define SAVANNAH_ACTOR_H
+#include"carnivore.h"
 
 namespace Savannah {
 	bool isInTheWindow(const Vec2& sub_coord);
@@ -15,4 +15,4 @@ namespace Savannah {
 	void carnivoreBehavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const double mi_spf);
 }
 
-#endif // !SAVANNAH_ACTOR_HPP
+#endif // !SAVANNAH_ACTOR_H

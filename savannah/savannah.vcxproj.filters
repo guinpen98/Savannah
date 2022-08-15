@@ -50,31 +50,31 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\savannah\savannah\actor.hpp">
+    <ClInclude Include="actor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\animal.hpp">
+    <ClInclude Include="animal.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\carnivore.hpp">
+    <ClInclude Include="carnivore.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\creatures.hpp">
+    <ClInclude Include="creatures.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\herbivore.hpp">
+    <ClInclude Include="herbivore.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\init.hpp">
+    <ClInclude Include="init.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\plant.hpp">
+    <ClInclude Include="plant.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="graph.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\savannah\savannah\vec2.hpp">
+    <ClInclude Include="vec2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="rand.h">

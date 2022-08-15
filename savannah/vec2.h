@@ -1,5 +1,5 @@
-﻿#ifndef SAVANNAH_VEC2_HPP
-#define SAVANNAH_VEC2_HPP
+﻿#ifndef SAVANNAH_VEC2_H
+#define SAVANNAH_VEC2_H
 
 namespace Savannah {
 	//座標
@@ -20,4 +20,4 @@ namespace Savannah {
 	};
 }
 
-#endif // !SAVANNAH_VEC2_HPP
+#endif // !SAVANNAH_VEC2_H

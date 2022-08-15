@@ -1,6 +1,6 @@
-﻿#ifndef SAVANNAH_ANIMAL_HPP
-#define SAVANNAH_ANIMAL_HPP
-#include"creatures.hpp"
+﻿#ifndef SAVANNAH_ANIMAL_H
+#define SAVANNAH_ANIMAL_H
+#include"creatures.h"
 
 namespace Savannah {
     //動物クラス
@@ -42,4 +42,4 @@ namespace Savannah {
     };
 }
 
-#endif // !SAVANNAH_ANIMAL_HPP
+#endif // !SAVANNAH_ANIMAL_H

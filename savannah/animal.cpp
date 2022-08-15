@@ -1,4 +1,4 @@
-﻿#include "animal.hpp"
+﻿#include "animal.h"
 #include "rand.h"
 
 namespace Savannah {

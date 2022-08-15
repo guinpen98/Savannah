@@ -1,6 +1,6 @@
-﻿#ifndef SAVANNAH_CARNIVORE_HPP
-#define SAVANNAH_CARNIVORE_HPP
-#include "herbivore.hpp"
+﻿#ifndef SAVANNAH_CARNIVORE_H
+#define SAVANNAH_CARNIVORE_H
+#include "herbivore.h"
 
 namespace Savannah {
     enum class CarnivoreStateE :int {
@@ -36,4 +36,4 @@ namespace Savannah {
     };
 }
 
-#endif // !SAVANNAH_CARNIVORE_HPP
+#endif // !SAVANNAH_CARNIVORE_H

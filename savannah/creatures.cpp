@@ -1,4 +1,4 @@
-﻿#include "creatures.hpp"
+﻿#include "creatures.h"
 #include"configuration.h"
 #include "rand.h"
 #include <cmath>

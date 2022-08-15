@@ -1,8 +1,8 @@
-﻿#include "init.hpp"
+﻿#include "init.h"
 #include "rand.h"
-#include "actor.hpp"
+#include "actor.h"
 #include <chrono>
-#include "carnivore.hpp"
+#include "carnivore.h"
 
 namespace Savannah {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
@@ -62,9 +62,6 @@ namespace Savannah {
                 //1フレームあたりの時間計測
                 old_time = new_time;
                 new_time = std::chrono::system_clock::now();
-
-                //ランダムで草食動物生成
-                //if (uid(eng)) herbivore.emplace_back();
 
                 const double mi_spf = double(std::chrono::duration_cast<std::chrono::milliseconds>(new_time - old_time).count());
 

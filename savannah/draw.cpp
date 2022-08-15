@@ -1,4 +1,4 @@
-﻿#include "carnivore.hpp"
+﻿#include "carnivore.h"
 #include "graph.h"
 #include <DxLib.h>
 

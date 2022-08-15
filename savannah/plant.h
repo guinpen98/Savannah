@@ -1,7 +1,7 @@
-﻿#ifndef SAVANNAH_PLANT_HPP
-#define SAVANNAH_PLANT_HPP
+﻿#ifndef SAVANNAH_PLANT_H
+#define SAVANNAH_PLANT_H
 
-#include"creatures.hpp"
+#include"creatures.h"
 
 namespace Savannah {
     //植物クラス
@@ -23,4 +23,4 @@ namespace Savannah {
 }
 
 
-#endif // !SAVANNAH_PLANT_HPP
+#endif // !SAVANNAH_PLANT_H
