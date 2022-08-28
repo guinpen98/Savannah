@@ -3,6 +3,7 @@
 #include "actor.h"
 #include <chrono>
 #include "carnivore.h"
+#include "get_key.h"
 
 namespace Savannah {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
@@ -29,7 +30,7 @@ namespace Savannah {
         for (int i = 0; i < 200; i++) {
             randomPlantBorn(plant, rd);
         }
-        char key_state[256];
+        GetKey get_key;
         int camera_x = 0;
         int camera_y = 0;
         const int camera_move_distance = 3;
@@ -38,11 +39,11 @@ namespace Savannah {
 
 
         while (Update()) {
-            GetHitKeyStateAll(key_state);
-            if (key_state[KEY_INPUT_E])
+            get_key.update();
+            if (get_key.isZoomIn())
                 if (camera_exrate <= 5)
                     camera_exrate += camera_change_exrate;
-            if (key_state[KEY_INPUT_Q])
+            if (get_key.isZoomOut())
                 if (camera_exrate >= 1) {
                     camera_exrate -= camera_change_exrate;
                     if (camera_x > field_width - window_width / camera_exrate)
@@ -50,14 +51,10 @@ namespace Savannah {
                     if (camera_y > field_height - window_height / camera_exrate)
                         camera_y = field_height - int(window_height / camera_exrate);
                 }
-            if (key_state[KEY_INPUT_A] || key_state[KEY_INPUT_LEFT])
-                if (camera_x >= 0) camera_x -= camera_move_distance;
-            if (key_state[KEY_INPUT_D] || key_state[KEY_INPUT_RIGHT])
-                if (camera_x <= field_width - window_width / camera_exrate) camera_x += camera_move_distance;
-            if (key_state[KEY_INPUT_W] || key_state[KEY_INPUT_UP])
-                if (camera_y >= 0) camera_y -= camera_move_distance;
-            if (key_state[KEY_INPUT_S] || key_state[KEY_INPUT_DOWN])
-                if (camera_y <= field_height - window_height / camera_exrate) camera_y += camera_move_distance;
+            if (get_key.isLeft()) if (camera_x >= 0) camera_x -= camera_move_distance;
+            if (get_key.isRight()) if (camera_x <= field_width - window_width / camera_exrate) camera_x += camera_move_distance;
+            if (get_key.isUp()) if (camera_y >= 0) camera_y -= camera_move_distance;
+            if (get_key.isDown()) if (camera_y <= field_height - window_height / camera_exrate) camera_y += camera_move_distance;
             for (int k = 0; k < 1; k++) {
                 //1フレームあたりの時間計測
                 old_time = new_time;

@@ -29,6 +29,7 @@
     <ClCompile Include="..\..\savannah\savannah\main.cpp" />
     <ClCompile Include="..\..\savannah\savannah\plant.cpp" />
     <ClCompile Include="..\..\savannah\savannah\vec2.cpp" />
+    <ClCompile Include="get_key.cpp" />
     <ClCompile Include="rand.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,7 @@
     <ClInclude Include="animal.h" />
     <ClInclude Include="carnivore.h" />
     <ClInclude Include="creatures.h" />
+    <ClInclude Include="get_key.h" />
     <ClInclude Include="herbivore.h" />
     <ClInclude Include="init.h" />
     <ClInclude Include="plant.h" />
