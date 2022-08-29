@@ -29,12 +29,14 @@
     <ClCompile Include="..\..\savannah\savannah\main.cpp" />
     <ClCompile Include="..\..\savannah\savannah\plant.cpp" />
     <ClCompile Include="..\..\savannah\savannah\vec2.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="get_key.cpp" />
     <ClCompile Include="rand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h" />
     <ClInclude Include="animal.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="carnivore.h" />
     <ClInclude Include="creatures.h" />
     <ClInclude Include="get_key.h" />

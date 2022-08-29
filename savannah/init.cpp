@@ -4,6 +4,7 @@
 #include <chrono>
 #include "carnivore.h"
 #include "get_key.h"
+#include "camera.h"
 
 namespace Savannah {
     bool Update() { return (DxLib::ScreenFlip() != -1 && DxLib::ClearDrawScreen() != -1 && DxLib::ProcessMessage() != -1); }
@@ -31,30 +32,26 @@ namespace Savannah {
             randomPlantBorn(plant, rd);
         }
         GetKey get_key;
-        int camera_x = 0;
-        int camera_y = 0;
-        const int camera_move_distance = 3;
-        const double camera_change_exrate = 0.01;
-        double camera_exrate = 1;
+        Camera camera;
 
 
         while (Update()) {
             get_key.update();
             if (get_key.isZoomIn())
-                if (camera_exrate <= 5)
-                    camera_exrate += camera_change_exrate;
+                if (camera.exrate <= 5)
+                    camera.exrate += camera.change_exrate;
             if (get_key.isZoomOut())
-                if (camera_exrate >= 1) {
-                    camera_exrate -= camera_change_exrate;
-                    if (camera_x > field_width - window_width / camera_exrate)
-                        camera_x = field_width - int(window_width / camera_exrate);
-                    if (camera_y > field_height - window_height / camera_exrate)
-                        camera_y = field_height - int(window_height / camera_exrate);
+                if (camera.exrate >= 1) {
+                    camera.exrate -= camera.change_exrate;
+                    if (camera.x > field_width - window_width / camera.exrate)
+                        camera.x = field_width - int(window_width / camera.exrate);
+                    if (camera.y > field_height - window_height / camera.exrate)
+                        camera.y = field_height - int(window_height / camera.exrate);
                 }
-            if (get_key.isLeft()) if (camera_x >= 0) camera_x -= camera_move_distance;
-            if (get_key.isRight()) if (camera_x <= field_width - window_width / camera_exrate) camera_x += camera_move_distance;
-            if (get_key.isUp()) if (camera_y >= 0) camera_y -= camera_move_distance;
-            if (get_key.isDown()) if (camera_y <= field_height - window_height / camera_exrate) camera_y += camera_move_distance;
+            if (get_key.isLeft()) if (camera.x >= 0) camera.x -= camera.move_distance;
+            if (get_key.isRight()) if (camera.x <= field_width - window_width / camera.exrate) camera.x += camera.move_distance;
+            if (get_key.isUp()) if (camera.y >= 0) camera.y -= camera.move_distance;
+            if (get_key.isDown()) if (camera.y <= field_height - window_height / camera.exrate) camera.y += camera.move_distance;
             for (int k = 0; k < 1; k++) {
                 //1フレームあたりの時間計測
                 old_time = new_time;
@@ -67,13 +64,13 @@ namespace Savannah {
                 carnivoreBehavior(carnivores, herbivores, mi_spf);
 
                 for (const auto& p : plant) {
-                    p.draw(camera_x, camera_y, camera_exrate);
+                    p.draw(camera.x, camera.y, camera.exrate);
                 }
                 for (const auto& h : herbivores) {
-                    h.draw(camera_x, camera_y, camera_exrate);
+                    h.draw(camera.x, camera.y, camera.exrate);
                 }
                 for (const auto& c : carnivores) {
-                    c.draw(camera_x, camera_y, camera_exrate);
+                    c.draw(camera.x, camera.y, camera.exrate);
                 }
 
                 pass_time += mi_spf / 1000.0;
