@@ -32,51 +32,34 @@ namespace Savannah {
             randomPlantBorn(plant, rd);
         }
         GetKey get_key;
-        Camera camera;
+        Camera camera(&get_key);
 
 
         while (Update()) {
-            get_key.update();
-            if (get_key.isZoomIn())
-                if (camera.exrate <= 5)
-                    camera.exrate += camera.change_exrate;
-            if (get_key.isZoomOut())
-                if (camera.exrate >= 1) {
-                    camera.exrate -= camera.change_exrate;
-                    if (camera.x > field_width - window_width / camera.exrate)
-                        camera.x = field_width - int(window_width / camera.exrate);
-                    if (camera.y > field_height - window_height / camera.exrate)
-                        camera.y = field_height - int(window_height / camera.exrate);
-                }
-            if (get_key.isLeft()) if (camera.x >= 0) camera.x -= camera.move_distance;
-            if (get_key.isRight()) if (camera.x <= field_width - window_width / camera.exrate) camera.x += camera.move_distance;
-            if (get_key.isUp()) if (camera.y >= 0) camera.y -= camera.move_distance;
-            if (get_key.isDown()) if (camera.y <= field_height - window_height / camera.exrate) camera.y += camera.move_distance;
-            for (int k = 0; k < 1; k++) {
-                //1フレームあたりの時間計測
-                old_time = new_time;
-                new_time = std::chrono::system_clock::now();
+            camera.update();
+            //1フレームあたりの時間計測
+            old_time = new_time;
+            new_time = std::chrono::system_clock::now();
 
-                const double mi_spf = double(std::chrono::duration_cast<std::chrono::milliseconds>(new_time - old_time).count());
+            const double mi_spf = double(std::chrono::duration_cast<std::chrono::milliseconds>(new_time - old_time).count());
 
-                plantBehavior(plant, mi_spf);
-                herbivoreBehavior(herbivores, plant, mi_spf);
-                carnivoreBehavior(carnivores, herbivores, mi_spf);
+            plantBehavior(plant, mi_spf);
+            herbivoreBehavior(herbivores, plant, mi_spf);
+            carnivoreBehavior(carnivores, herbivores, mi_spf);
 
-                for (const auto& p : plant) {
-                    p.draw(camera.x, camera.y, camera.exrate);
-                }
-                for (const auto& h : herbivores) {
-                    h.draw(camera.x, camera.y, camera.exrate);
-                }
-                for (const auto& c : carnivores) {
-                    c.draw(camera.x, camera.y, camera.exrate);
-                }
-
-                pass_time += mi_spf / 1000.0;
-                unsigned int Color = GetColor(255, 255, 255);
-                DrawFormatString(0, 0, Color, "%d", int(pass_time / 24));
+            for (const auto& p : plant) {
+                p.draw(camera.x, camera.y, camera.exrate);
             }
+            for (const auto& h : herbivores) {
+                h.draw(camera.x, camera.y, camera.exrate);
+            }
+            for (const auto& c : carnivores) {
+                c.draw(camera.x, camera.y, camera.exrate);
+            }
+
+            pass_time += mi_spf / 1000.0;
+            unsigned int Color = GetColor(255, 255, 255);
+            DrawFormatString(0, 0, Color, "%d", int(pass_time / 24));
         }
     }
 }
