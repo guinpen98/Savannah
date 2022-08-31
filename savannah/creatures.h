@@ -9,19 +9,14 @@ namespace Savannah {
 		//座標
 		Vec2 coord;
 
-		double spf = 0.0;
-
 		//年齢
 		double age = 0.0;
 	protected:
 		int one_year = 24;
 		double lifespan = 5.0;
 		class Rand* rd;
+		class Time* time;
 
-		//計測した1フレームあたりの秒数を設定する
-		void setSpf(const double mi_spf);
-		//経過秒数を渡す
-		double getSpf()const;
 		//歳をとる
 		void setOld();
 		//年齢を渡す
@@ -33,12 +28,13 @@ namespace Savannah {
 		//寿命の値を渡す
 		double getLifespan()const;
 	public:
-		Creatures(Rand*);
+		Creatures(Rand*, Time*);
 		//座標を渡す
 		Vec2 getCoord()const;
 		//座標の更新
 		void setCoord(const Vec2& new_coord);
 		Rand* getRd()const;
+		Time* getTime()const;
 
 		virtual void draw(int camera_x, const int camera_y, const double camera_exrate)const = 0;
 	};

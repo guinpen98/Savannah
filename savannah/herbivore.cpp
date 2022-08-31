@@ -69,7 +69,7 @@ namespace Savannah {
     void Herbivore::born(const Vec2& born_coord, std::vector<Herbivore>& herbivores, const size_t s) {
         if (!isBreedingSeason()) return;
         if (!herbivores[s].isBreedingSeason()) return;
-        herbivores.emplace_back(herbivores[0].getRd());
+        herbivores.emplace_back(herbivores[0].getRd(),herbivores[0].getTime());
         herbivores.back().setCoord(born_coord);
         satiety -= one_year / 2.0;
         herbivore_state = HerbivoreStateE::herbivoreWanderE;
@@ -85,7 +85,7 @@ namespace Savannah {
     void Herbivore::setHerbivoreState(enum HerbivoreStateE new_state) {
         herbivore_state = new_state;
     }
-    Herbivore::Herbivore(Rand* rd):Animal(rd)
+    Herbivore::Herbivore(Rand* rd, Time* time):Animal(rd, time)
     {
         lifespan = 20.0;
         one_year = 24;

@@ -1,5 +1,6 @@
 ﻿#include "animal.h"
 #include "rand.h"
+#include "time.h"
 
 namespace Savannah {
     //動物クラス実装
@@ -9,7 +10,7 @@ namespace Savannah {
         }
         calculateDistinationDistance();
         const Vec2 temp_coord = getCoord();
-        const double temp_spf = getSpf();
+        const double temp_spf = time->getSpf();
         const  Vec2 dCoord = Vec2((distination_coord.x - temp_coord.x) / distance * temp_spf * 60, (distination_coord.y - temp_coord.y) / distance * temp_spf * 60);
         setIsLeftDirection(dCoord.x);
         setCoord(temp_coord + dCoord);
@@ -37,21 +38,20 @@ namespace Savannah {
     bool Animal::getIsLeftDirection()const {
         return is_left_direction;
     }
-    void Animal::lifeActivity(const double mi_spf, bool& is_die) {
-        setSpf(mi_spf);
+    void Animal::lifeActivity(bool& is_die) {
         setOld();
         passBreedPeriod();
-        satiety -= getSpf();
+        satiety -= time->getSpf();
         is_die = (getAge() > one_year * lifespan || satiety < 0);
     }
     bool Animal::isBreedingSeason() {
         return (satiety > max_satiety * 3.0 / 4.0 && getAge() > breed_age && breed_count > breed_period);
     }
-    Animal::Animal(Rand* rd):Creatures(rd)
+    Animal::Animal(Rand* rd, class Time* time):Creatures(rd, time)
     {
         distination_coord = rd->randDist();
     }
     void Animal::passBreedPeriod() {
-        breed_count += getSpf();
+        breed_count += time->getSpf();
     }
 }

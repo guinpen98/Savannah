@@ -12,9 +12,9 @@ namespace Savannah {
         bool isBreed();
     public:
         //コンストラクタ
-        explicit Plant(class Rand*);
+        explicit Plant(Rand*, Time*);
         //生命活動
-        void lifeActivity(const double mi_spf, bool& is_die, bool& is_breed);
+        void lifeActivity(bool& is_die, bool& is_breed);
         //他の植物と被っているかの判定
         bool isCover(const Vec2& sub_coord)const;
 

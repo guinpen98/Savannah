@@ -1,7 +1,7 @@
 ﻿#include "carnivore.h"
 
 namespace Savannah {
-    Carnivore::Carnivore(Rand* rd):Animal(rd)
+    Carnivore::Carnivore(Rand* rd, Time* time):Animal(rd, time)
     {
         lifespan = 20.0;
         one_year = 24;
@@ -73,7 +73,7 @@ namespace Savannah {
         else setDistination(carnivore[s].getCoord());
     }
     void Carnivore::born(const Vec2& born_coord, std::vector<Carnivore>& carnivores, const size_t s) {
-        carnivores.emplace_back(carnivores[0].getRd());
+        carnivores.emplace_back(carnivores[0].getRd(),carnivores[0].getTime());
         carnivores.back().setCoord(born_coord);
         satiety -= one_year / 4.0;
         carnivore_state = CarnivoreStateE::carnivoreWanderE;

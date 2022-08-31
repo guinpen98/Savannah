@@ -1,17 +1,17 @@
 ﻿#include "plant.h"
 #include "configuration.h"
+#include "time.h"
 
 namespace Savannah {
-    Plant::Plant(Rand* rd):Creatures(rd)
+    Plant::Plant(Rand* rd, Time* time):Creatures(rd, time)
     {
         one_year = 24;
         lifespan = 5.0;
     }
     //植物クラス実装
-    void Plant::lifeActivity(const double mi_spf, bool& is_die, bool& is_breed) {
-        setSpf(mi_spf);
+    void Plant::lifeActivity(bool& is_die, bool& is_breed) {
         setOld();
-        breed += getSpf();
+        breed += time->getSpf();
         is_breed = isBreed();
         Vec2 temp_coord = getCoord();
         is_die = (temp_coord.x < 0 || temp_coord.x > field_width || temp_coord.y < 0 || temp_coord.y > field_height || getAge() > one_year * lifespan);

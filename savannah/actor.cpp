@@ -1,5 +1,6 @@
 ﻿#include "actor.h"
 #include "rand.h"
+#include "time.h"
 #include "creatures.h"
 
 namespace Savannah {
@@ -15,18 +16,18 @@ namespace Savannah {
     void plantBorn(std::vector<Plant>& plants, const Vec2& born_coord) {
         if (!isInTheWindow(born_coord)) return;
         if (plantIsCover(plants, born_coord)) return;
-        plants.emplace_back(plants[0].getRd());
+        plants.emplace_back(plants[0].getRd(), plants[0].getTime());
         plants[plants.size() - 1].setCoord(born_coord);
 
     }
-    void randomPlantBorn(std::vector<Plant>& plants, class Rand& rd) {
+    void randomPlantBorn(std::vector<Plant>& plants, Rand& rd, Time& time) {
         Vec2 born_coord = rd.randDist();
         while (!isInTheWindow(born_coord) || plantIsCover(plants, born_coord)) {
             born_coord = rd.randDist();
         }
         if (!isInTheWindow(born_coord)) return;
         if (plantIsCover(plants, born_coord)) return;
-        plants.emplace_back(&rd);
+        plants.emplace_back(&rd, &time);
         plants[plants.size() - 1].setCoord(born_coord);
 
     }
@@ -41,11 +42,11 @@ namespace Savannah {
     }
 
     //植物の行動
-    void plantBehavior(std::vector<Plant>& plant, const double mi_spf) {
+    void plantBehavior(std::vector<Plant>& plant) {
         //植物それぞれの生命活動
         for (size_t i = 0; i < plant.size();) {
             bool plant_is_die, plant_is_breed;
-            plant[i].lifeActivity(mi_spf, plant_is_die, plant_is_breed);
+            plant[i].lifeActivity(plant_is_die, plant_is_breed);
             //植物の繁殖
             if (plant_is_breed) plantBreed(plant, i);
             //植物が寿命で死ぬ
@@ -54,12 +55,12 @@ namespace Savannah {
         }
     }
 
-    void herbivoreBehavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& plant, const double mi_spf) {
+    void herbivoreBehavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& plant) {
         //草食動物それぞれの行動
         for (size_t i = 0; i < herbivore.size();) {
             auto& h = herbivore[i];
             bool herbivore_is_die;
-            h.lifeActivity(mi_spf, herbivore_is_die);
+            h.lifeActivity(herbivore_is_die);
             if (herbivore_is_die) {
                 herbivore.erase(herbivore.begin() + i);
             }
@@ -70,12 +71,12 @@ namespace Savannah {
         }
     }
 
-    void carnivoreBehavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const double mi_spf) {
+    void carnivoreBehavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore) {
         //肉食動物それぞれの行動
         for (size_t i = 0; i < carnivore.size();) {
             auto& c = carnivore[i];
             bool carnivore_is_die;
-            c.lifeActivity(mi_spf, carnivore_is_die);
+            c.lifeActivity(carnivore_is_die);
             if (carnivore_is_die) {
                 carnivore.erase(carnivore.begin() + i);
             }

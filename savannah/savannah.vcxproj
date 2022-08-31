@@ -32,6 +32,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="get_key.cpp" />
     <ClCompile Include="rand.cpp" />
+    <ClCompile Include="time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h" />
@@ -44,9 +45,14 @@
     <ClInclude Include="init.h" />
     <ClInclude Include="plant.h" />
     <ClInclude Include="graph.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="time.h" />
     <ClInclude Include="vec2.h" />
     <ClInclude Include="configuration.h" />
     <ClInclude Include="rand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="savannah.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

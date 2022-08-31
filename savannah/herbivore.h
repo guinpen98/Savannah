@@ -29,7 +29,7 @@ namespace Savannah {
         void setHerbivoreState(enum HerbivoreStateE new_state);
     public:
         HerbivoreStateE herbivore_state = HerbivoreStateE::herbivoreWanderE;
-        explicit Herbivore(Rand*);
+        explicit Herbivore(Rand*, Time*);
 
         //行動
         void behavior(std::vector<Herbivore>& herbivore, std::vector<Plant>& plant, const size_t i);

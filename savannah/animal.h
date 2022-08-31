@@ -34,11 +34,11 @@ namespace Savannah {
         //繁殖期かどうかの判定
         bool isBreedingSeason();
     public:
-        Animal(Rand*);
+        Animal(Rand*, Time*);
         //目的地をランダムに設定
         void setRandomDistination();
         //生命活動を管理
-        void lifeActivity(const double mi_spf, bool& is_die);
+        void lifeActivity(bool& is_die);
     };
 }
 

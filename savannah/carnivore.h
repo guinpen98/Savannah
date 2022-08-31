@@ -28,7 +28,7 @@ namespace Savannah {
 
     public:
         CarnivoreStateE carnivore_state = CarnivoreStateE::carnivoreWanderE;
-        explicit Carnivore(Rand*);
+        explicit Carnivore(Rand*, Time*);
         //行動
         void behavior(std::vector<Carnivore>& carnivore, std::vector<Herbivore>& herbivore, const size_t hs);
         //描画
